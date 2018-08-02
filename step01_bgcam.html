@@ -1321,8 +1321,8 @@ function step03callback() {
 				if(step02LoadOver>=1){
 					step02LoadOver=-100;
 					ShowStep02();
-				step02animate();
-				step02bindEvent();
+					step02animate();
+					step02bindEvent();
 				}
 				
 			}
@@ -1444,13 +1444,14 @@ function step03callback() {
 						}
 						//console.log(object.children);
 					});
-					step02LoadOver+=1;
-					OnStep02LoadOver();
+				
 					//object.rotation = new THREE.
 					object.position.y = -5;
 					step02fr02 = object;
 					//step02fr02.visible = false;
 					scene.add(object);
+					step02LoadOver+=1;
+					OnStep02LoadOver();
 
 				}, onProgress, onError);
 
@@ -1547,6 +1548,7 @@ function step03callback() {
 
 			//绑定事件
 			function step02bindEvent() {
+				addDeviceMotionEvent();
 				document.addEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
 				document.addEventListener('touchmove', touchMoveFunc, { passive: false }, false);
 				document.addEventListener('touchend', touchEndFunc, { passive: false }, false);
@@ -1592,7 +1594,7 @@ function step03callback() {
 					let target = evt.target;
 					if (target.id == "OK" || target.id == "dxk") {
 						$('.wrap-dialog').addClass("hide");
-						addDeviceMotionEvent();
+						
 					}
 				} catch (e) {
 					//alert('touchEndFunc：' + e.message);
