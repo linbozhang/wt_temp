@@ -298,16 +298,20 @@
 		}
 		function step01() {
 			if(curStep==1)
-				return;
+				return;	
 			isendzhushe = false
-			s1.color = "#007cff";
-			document.getElementById("tishi").style.display = "inline";
+			s1.color = "#007cff";		
+			showStep01();
 			ResetStopCount();
 			curStep=1;
 			hideStep02();
 			hideStep03();
 			hideStep04();
 			step1callback();
+		}
+		function showStep01(){
+		
+			document.getElementById("tishi").style.display="inline";
 		}
 		function hideStep01(){
 			document.getElementById("tishi").style.display = "none";
@@ -805,10 +809,25 @@
 				mouseY = (event.clientY - windowHalfY) / 2;
 
 			}
+			function clearThree(obj){
+				while(obj.children.length > 0){ 
+					clearThree(obj.children[0])
+					obj.remove(obj.children[0]);
+				}
+				if(obj.geometry) obj.geometry.dispose()
+				if(obj.material) obj.material.dispose()
+				if(obj.texture) obj.texture.dispose()
+			}   
 			//let stopCount04=0;
 			function animate04() {
 				if(curStep!=4)
+				{
+					clearThree(scene);
+					render04();
 					return;
+
+				}
+					
 				//stopCount04++;
 				requestAnimationFrame(animate04);
 				if (mixers.length > 0) {
@@ -1507,10 +1526,24 @@ function onDocumentMouseMove(event) {
 	mouseX = (event.clientX - windowHalfX) / 2;
 	mouseY = (event.clientY - windowHalfY) / 2;
 }
+function clearThree(obj){
+				while(obj.children.length > 0){ 
+					clearThree(obj.children[0])
+					obj.remove(obj.children[0]);
+				}
+				if(obj.geometry) obj.geometry.dispose()
+				if(obj.material) obj.material.dispose()
+				if(obj.texture) obj.texture.dispose()
+			}  
 //let stopCount03=0;
 function animate03() {
 	if(curStep!=3)
+	{
+		clearThree(scene);
+		render03();
 		return;
+	}
+		
 	//stopCount03++;
 	requestAnimationFrame(animate03);
 	if (mixers.length > 0) {
@@ -1791,10 +1824,23 @@ function step02callback(){
 			mouseY = (event.clientY - windowHalfY) / 2;
 
 		}
+		function clearThree(obj){
+				while(obj.children.length > 0){ 
+					clearThree(obj.children[0])
+					obj.remove(obj.children[0]);
+				}
+				if(obj.geometry) obj.geometry.dispose()
+				if(obj.material) obj.material.dispose()
+				if(obj.texture) obj.texture.dispose()
+			}  
 		//let stopCount02=0;
 		function animate2() {
-			if(curStep!=2)
+			if(curStep!=2){
+				clearThree(scene);
+				render02();
 				return;
+			}
+				
 			//stopCount02++;
 			requestAnimationFrame(animate2);
 			if (mixers.length > 0) {
@@ -1963,10 +2009,16 @@ function step02callback(){
 			backgroundScene.add(backgroundMesh);*/
 
 			init();
-			animate();
-			bindEvent();
-
-
+			
+			
+			function OnLoadOver(){
+				if(step01loadOver>=2){
+					step01loadOver=-100;
+						animate();
+						step01bindEvent();
+					}
+			}
+			let step01loadOver=0;
 			function init() {
 
 				//document.getElementById("backtoshow").style.display = "none";
@@ -2115,6 +2167,9 @@ function step02callback(){
 					fr01 = object;
 					//yh.visible=false;
 					scene.add(object);
+					step01loadOver+=1;
+					OnLoadOver();
+				
 
 				}, onProgress, onError);
 				loader.load('./models/caozuo_furong02.fbx', function (object) {
@@ -2173,6 +2228,9 @@ function step02callback(){
 					fr02 = object;
 					fr02.visible = false;
 					scene.add(object);
+					step01loadOver+=1;
+					OnLoadOver();
+				
 
 				}, onProgress, onError);
 
@@ -2194,19 +2252,19 @@ function step02callback(){
 			}
 
 			//绑定事件
-			function bindEvent() {
-				document.addEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
-				document.addEventListener('touchmove', touchMoveFunc, { passive: false }, false);
-				document.addEventListener('touchend', touchEndFunc, { passive: false }, false);
+			function step01bindEvent() {
+				document.addEventListener('touchstart', step01touchSatrtFunc, { passive: false }, false);
+				document.addEventListener('touchmove', step01touchMoveFunc, { passive: false }, false);
+				document.addEventListener('touchend', step01touchEndFunc, { passive: false }, false);
 			}
 			//解绑事件
-			function removeEvent() {
-				document.removeEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
-				document.removeEventListener('touchmove', touchMoveFunc, { passive: false }, false);
-				document.removeEventListener('touchend', touchEndFunc, { passive: false }, false);
+			function step01removeEvent() {
+				document.removeEventListener('touchstart', step01touchSatrtFunc, { passive: false }, false);
+				document.removeEventListener('touchmove', step01touchMoveFunc, { passive: false }, false);
+				document.removeEventListener('touchend', step01touchEndFunc, { passive: false }, false);
 			}
 
-			function touchSatrtFunc(evt) {
+			function step01touchSatrtFunc(evt) {
 				try {
 					evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 					let touch = evt.touches[0]; //获取第一个触点
@@ -2226,7 +2284,7 @@ function step02callback(){
 			}
 
 			//touchmove事件，这个事件无法获取坐标
-			function touchMoveFunc(evt) {
+			function step01touchMoveFunc(evt) {
 				try {
 					evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 					let touch = evt.touches[0]; //获取第一个触点
@@ -2251,7 +2309,7 @@ function step02callback(){
 			}
 
 			//touchend事件
-			function touchEndFunc(evt) {
+			function step01touchEndFunc(evt) {
 				try {
 					evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 					let target = evt.target;
@@ -2293,10 +2351,24 @@ function step02callback(){
 				mouseY = (event.clientY - windowHalfY) / 2;
 
 			}
-			
+			function clearThree(obj){
+				while(obj.children.length > 0){ 
+					clearThree(obj.children[0])
+					obj.remove(obj.children[0]);
+				}
+				if(obj.geometry) obj.geometry.dispose()
+				if(obj.material) obj.material.dispose()
+				if(obj.texture) obj.texture.dispose()
+			}   
+
 			function animate() {
 				if(curStep!=1)
+				{					
+					clearThree(scene);
+					render();
+					step01removeEvent();
 					return;
+				}					
 				//stopCount01++;
 				requestAnimationFrame(animate);
 				if (mixers.length > 0) {
