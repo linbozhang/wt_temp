@@ -352,12 +352,15 @@
 			s3.color = "#007cff";
 			ResetStopCount();
 			//document.getElementById("bottombtn").style.display="block";
-			document.getElementById("tishi01").style.display="inline";
+			
 			curStep=3;
 			hideStep01();
 			hideStep02();
 			hideStep04();
 			step03callback();
+		}
+		function showStep03(){
+			document.getElementById("tishi01").style.display="inline";
 		}
 		function hideStep04(){
 			s4.color = "#000000";
@@ -376,12 +379,14 @@
 			hideStep01();
 			hideStep03();
 			hideStep02();
-			document.getElementById("tishi04").style.display="inline";			
+					
 			s4.color = "#007cff";
 			curStep=4;
 			step04callback();
 		}
-
+	function showStep04(){
+		document.getElementById("tishi04").style.display="inline";	
+	}
 	</script>
 	<script>
 
@@ -553,9 +558,12 @@
 
 
 			init04();
-			animate04();
-			bindEvent04();
-
+			let step04LoadOver=0;
+			function onStep04LoadOver(){
+				showStep04();
+				animate04();
+				bindEvent04();
+			}
 			function init04() {
 
 
@@ -682,6 +690,8 @@
 						//console.log(object.children);
 					});
 
+					step04LoadOver+=1;
+					onStep04LoadOver();
 					//object.rotation = new THREE.
 					object.position.y = -7;
 					zhenguan = object;
@@ -714,7 +724,7 @@
 				document.addEventListener('touchend', touchEndFunc, { passive: false }, false);
 			}
 			//解绑事件
-			function removeEvent() {
+			function removeEvent04() {
 				document.removeEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
 				document.removeEventListener('touchmove', touchMoveFunc04, { passive: false }, false);
 				document.removeEventListener('touchend', touchEndFunc, { passive: false }, false);
@@ -827,6 +837,7 @@
 				{
 					clearThree(scene);
 					render04();
+					removeEvent04();
 					return;
 
 				}
@@ -1021,9 +1032,18 @@ backgroundScene.add(backgroundCamera);
 backgroundScene.add(backgroundMesh);*/
 
 init03();
-animate03();
-bindEvent03();
 
+
+let step03LoadOver=0;
+function OnStep03LoadOver(){
+	if(step03LoadOver>=7){
+		step03LoadOver=-100;
+		showStep03();
+		bindEvent03();
+		animate03();
+	}
+	
+}
 function init03() {
 
 	//document.getElementById("backtoshow").style.display = "none";
@@ -1165,7 +1185,9 @@ function init03() {
 			}
 			//console.log(object.children);
 		});
-
+		
+	step03LoadOver+=1;
+	OnStep03LoadOver();
 		//object.rotation = new THREE.
 		object.position.y = -7;
 		bzm = object;
@@ -1223,7 +1245,8 @@ function init03() {
 			}
 			//console.log(object.children);
 		});
-
+		step03LoadOver+=1;
+		OnStep03LoadOver();
 		//object.rotation = new THREE.
 		object.position.y = -7;
 		pq = object;
@@ -1281,7 +1304,8 @@ function init03() {
 			}
 			//console.log(object.children);
 		});
-
+		step03LoadOver+=1;
+		OnStep03LoadOver();
 		//object.rotation = new THREE.
 		object.position.y = -7;
 		zbzs = object;
@@ -1339,7 +1363,8 @@ function init03() {
 			}
 			//console.log(object.children);
 		});
-
+		step03LoadOver+=1;
+	OnStep03LoadOver();
 		//object.rotation = new THREE.
 		object.position.y = -7;
 		zs = object;
@@ -1356,6 +1381,8 @@ function init03() {
 		object.scale.set(0.3, 0.3, 0.3);
 		gebo = object;
 		gebo.visible = false;
+		step03LoadOver+=1;
+		OnStep03LoadOver();
 		scene.add(object);
 
 	}, onProgress, onError);
@@ -1368,6 +1395,9 @@ function init03() {
 		object.scale.set(0.3, 0.3, 0.3);
 		tunbu = object;
 		tunbu.visible = false;
+		step03LoadOver+=1;
+		OnStep03LoadOver();
+	
 		scene.add(object);
 	}, onProgress, onError);
 	loader.load('./models/fubu.fbx', function (object) {
@@ -1379,6 +1409,8 @@ function init03() {
 		object.scale.set(0.3, 0.3, 0.3);
 		fubu = object;
 		fubu.visible = false;
+		step03LoadOver+=1;
+		OnStep03LoadOver();
 		scene.add(object);
 	}, onProgress, onError);
 
@@ -1408,7 +1440,7 @@ function bindEvent03() {
 	document.addEventListener('touchend', touchEndFunc, { passive: false }, false);
 }
 //解绑事件
-function removeEvent() {
+function removeEvent03() {
 	document.removeEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
 	document.removeEventListener('touchmove', touchMoveFunc, { passive: false }, false);
 	document.removeEventListener('touchend', touchEndFunc, { passive: false }, false);
@@ -1543,6 +1575,7 @@ function animate03() {
 	if(curStep!=3)
 	{
 		clearThree(scene);
+		removeEvent03();
 		render03();
 		return;
 	}
@@ -1795,7 +1828,7 @@ function step02callback(){
 				});
 
 				step02LoadOver+=1;
-
+				OnStep02LoadOver();
 				//object.rotation = new THREE.
 				object.position.y = -5;
 				fr02 = object;
