@@ -301,7 +301,7 @@
 				return;	
 			isendzhushe = false
 			s1.color = "#007cff";		
-			showStep01();
+			
 			ResetStopCount();
 			curStep=1;
 			hideStep02();
@@ -323,12 +323,15 @@
 			yaoindex = 0
 			ResetStopCount();
 			s2.color = "#007cff";
-			document.getElementById("tishiyaohuang").style.display = "block";
+			//showStep02();
 			curStep=2;
 			hideStep01();
 			hideStep03();
 			hideStep04();
 			step02callback();
+		}
+		function showStep02(){
+			document.getElementById("tishiyaohuang").style.display = "block";
 		}
 		function hideStep03() {
 			s3.color = "#000000";
@@ -1635,12 +1638,21 @@ function step02callback(){
 		backgroundScene.add(backgroundCamera);
 		backgroundScene.add(backgroundMesh);*/
 
-		bindEvent2();
+		
 		init2();
-		animate2();
-		addDeviceMotionEvent2();
+		
 
 
+		let step02LoadOver=0;
+		function OnStep02LoadOver(){
+			if(step02LoadOver>=1){
+				step02LoadOver=-100;
+				showStep02();
+				animate2();
+				addDeviceMotionEvent2();
+				bindEvent2();
+			}
+		}
 		 function init2() {
 
 			//document.getElementById("backtoshow").style.display = "none";
@@ -1782,6 +1794,8 @@ function step02callback(){
 					//console.log(object.children);
 				});
 
+				step02LoadOver+=1;
+
 				//object.rotation = new THREE.
 				object.position.y = -5;
 				fr02 = object;
@@ -1837,6 +1851,7 @@ function step02callback(){
 		function animate2() {
 			if(curStep!=2){
 				clearThree(scene);
+				removeEvent2();
 				render02();
 				return;
 			}
@@ -1891,18 +1906,18 @@ function step02callback(){
 
 		//绑定事件
 		function bindEvent2() {
-			document.addEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
-			document.addEventListener('touchmove', touchMoveFunc, { passive: false }, false);
-			document.addEventListener('touchend', touchEndFunc, { passive: false }, false);
+			document.addEventListener('touchstart', step02touchSatrtFunc, { passive: false }, false);
+			document.addEventListener('touchmove', step02touchMoveFunc, { passive: false }, false);
+			document.addEventListener('touchend', step02touchEndFunc, { passive: false }, false);
 		}
 		//解绑事件
-		function removeEvent() {
-			document.removeEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
-			document.removeEventListener('touchmove', touchMoveFunc, { passive: false }, false);
-			document.removeEventListener('touchend', touchEndFunc, { passive: false }, false);
+		function removeEvent2() {
+			document.removeEventListener('touchstart', step02touchSatrtFunc, { passive: false }, false);
+			document.removeEventListener('touchmove', step02touchMoveFunc, { passive: false }, false);
+			document.removeEventListener('touchend', step02touchEndFunc, { passive: false }, false);
 		}
 
-		function touchSatrtFunc(evt) {
+		function step02touchSatrtFunc(evt) {
 			try {
 				evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 				let touch = evt.touches[0]; //获取第一个触点
@@ -1922,7 +1937,7 @@ function step02callback(){
 		}
 
 		//touchmove事件，这个事件无法获取坐标
-		function touchMoveFunc(evt) {
+		function step02touchMoveFunc(evt) {
 			try {
 				evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 				let touch = evt.touches[0]; //获取第一个触点
@@ -1945,7 +1960,7 @@ function step02callback(){
 		}
 
 		//touchend事件
-		function touchEndFunc(evt) {
+		function step02touchEndFunc(evt) {
 			try {
 				evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 				let target = evt.target;
@@ -2013,6 +2028,7 @@ function step02callback(){
 			
 			function OnLoadOver(){
 				if(step01loadOver>=2){
+					showStep01();
 					step01loadOver=-100;
 						animate();
 						step01bindEvent();
