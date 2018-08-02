@@ -265,19 +265,26 @@
 			step01fr01action.stop();
 			step01fr01action.reset();
 			$('#dialogtitle').text("第二步");
-			document.getElementById("step02tishi").style.display = "inline";
+			
 			document.getElementById("step01tishi").style.display="none";
 			showBox("借助左手手掌，轻轻震荡几次，使药物完全复溶并确保药液无气泡，此时药液应为乳状混悬液");
 			step02callback();
+		}
+		function ShowStep02(){
+			document.getElementById("step02tishi").style.display = "inline";
 		}
 		function ToStep03() {
 			curStep=3;
 			$('#dialogtitle').text("第三步");
 			document.getElementById("step02tishi").style.display="none";
 			
-			document.getElementById("tishi01").style.display="inline";
+			
 			step03callback();
 			showBox("拔出针帽，轻推注射器活塞以排除气泡，在上臂，腹部或臀部等部位，进行皮下注射");
+		}
+		
+		function ShowStep03(){
+			document.getElementById("tishi01").style.display="inline";
 		}
 		function ToStep04() {
 			$('#dialogtitle').text("第四步");
@@ -285,13 +292,15 @@
 			document.getElementById("tishi01").style.display="none";
 			document.getElementById("tishi02").style.display="none";
 			document.getElementById("tishi03").style.display="none";
-			document.getElementById("step04tishi").style.display="inline";		
+			
 			curStep=4;	
 			step04callback();
 			
 			showBox("注射完成后，向上推动所示位置，安全装置将针头套住，保护医护人员避免针刺伤害");
 		}
-
+		function ShowStep04(){
+			document.getElementById("step04tishi").style.display="inline";	
+		}
 
 	//let isJiexi = false;
 	let step04isendmove = false;
@@ -339,9 +348,16 @@ function step04callback() {
 	let loader = new THREE.TextureLoader();
 
 	step04init();
-	step04animate();
-	step04bindEvent();
-
+	
+	let step04LoadOver=0;
+	function OnStep04LoadOver(){
+		if(step04LoadOver>=1){
+			step04animate();
+			step04bindEvent();
+			ShowStep04();
+		}
+	
+	}
 
 	function step04init() {
 
@@ -449,7 +465,8 @@ function step04callback() {
 					}
 				}
 			});
-
+			step04LoadOver+=1;
+			OnStep04LoadOver();
 			object.position.y = -7;
 			zhenguan = object;
 			scene.add(object);
@@ -554,8 +571,21 @@ function step04callback() {
 		mouseY = (event.clientY - windowHalfY) / 2;
 
 	}
+	function clearThree(obj){
+				while(obj.children.length > 0){ 
+					clearThree(obj.children[0])
+					obj.remove(obj.children[0]);
+				}
+				if(obj.geometry) obj.geometry.dispose()
+				if(obj.material) obj.material.dispose()
+				if(obj.texture) obj.texture.dispose()
+			}  
 	function step04animate() {
-		if(curStep!=4)return;
+		if(curStep!=4){
+			clearThree(scene);
+			step04animate();
+			return;
+		}
 		requestAnimationFrame(step04animate);
 		if (mixers.length > 0) {
 			for (let i = 0; i < mixers.length; i++) {
@@ -691,9 +721,17 @@ function step03callback() {
 
 
 	step03init();
-	step03animate();
-	step03bindEvent();
-
+	
+	let step03LoadOver=0;
+	function OnStep03LoadOver(){
+		if(step03LoadOver>=7){
+			step03LoadOver=-100;
+			step03animate();
+			step03bindEvent();
+			ShowStep03();
+		}
+		
+	}
 
 	function step03init() {
 		camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
@@ -796,7 +834,8 @@ function step03callback() {
 				}
 				//console.log(object.children);
 			});
-
+			step03LoadOver+=1;
+			OnStep03LoadOver();
 			//object.rotation = new THREE.
 			object.position.y = -7;
 			bzm = object;
@@ -844,7 +883,8 @@ function step03callback() {
 				}
 				//console.log(object.children);
 			});
-
+			step03LoadOver+=1;
+			OnStep03LoadOver();
 			//object.rotation = new THREE.
 			object.position.y = -7;
 			pq = object;
@@ -895,7 +935,8 @@ function step03callback() {
 			zbzs = object;
 			zbzs.visible = false;
 			scene.add(object);
-
+			step03LoadOver+=1;
+			OnStep03LoadOver();
 		}, onProgress, onError);
 
 		loader.load('./models/caozuo_zhushe.fbx', function (object) {
@@ -940,7 +981,8 @@ function step03callback() {
 			zs = object;
 			zs.visible = false;
 			scene.add(object);
-
+			step03LoadOver+=1;
+			OnStep03LoadOver();
 		}, onProgress, onError);
 
 		loader.load('./models/gebo.fbx', function (object) {
@@ -950,7 +992,8 @@ function step03callback() {
 			gebo = object;
 			gebo.visible = false;
 			scene.add(object);
-
+			step03LoadOver+=1;
+			OnStep03LoadOver();
 		}, onProgress, onError);
 		loader.load('./models/tunbu.fbx', function (object) {
 
@@ -961,6 +1004,8 @@ function step03callback() {
 			tunbu = object;
 			tunbu.visible = false;
 			scene.add(object);
+			step03LoadOver+=1;
+			OnStep03LoadOver();
 		}, onProgress, onError);
 		loader.load('./models/fubu.fbx', function (object) {
 			console.log(object);
@@ -972,6 +1017,8 @@ function step03callback() {
 			fubu = object;
 			fubu.visible = false;
 			scene.add(object);
+			step03LoadOver+=1;
+			OnStep03LoadOver();
 		}, onProgress, onError);
 
 
@@ -1096,8 +1143,21 @@ function step03callback() {
 		mouseX = (event.clientX - windowHalfX) / 2;
 		mouseY = (event.clientY - windowHalfY) / 2;
 	}
+	function clearThree(obj){
+				while(obj.children.length > 0){ 
+					clearThree(obj.children[0])
+					obj.remove(obj.children[0]);
+				}
+				if(obj.geometry) obj.geometry.dispose()
+				if(obj.material) obj.material.dispose()
+				if(obj.texture) obj.texture.dispose()
+			}  
 	function step03animate() {
-		if(curStep!=3) return;
+		if(curStep!=3){
+			clearThree(scene);
+			step03render();
+			return;
+		}
 		requestAnimationFrame(step03animate);
 		if (mixers.length > 0) {
 			for (let i = 0; i < mixers.length; i++) {
@@ -1255,9 +1315,17 @@ function step03callback() {
 			let loader = new THREE.TextureLoader();
 
 			step02init();
-			step02animate();
-			step02bindEvent();
-
+			
+			let step02LoadOver=0;
+			function OnStep02LoadOver(){
+				if(step02LoadOver>=1){
+					step02LoadOver=-100;
+					ShowStep02();
+				step02animate();
+				step02bindEvent();
+				}
+				
+			}
 			function step02init() {
 
 				camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
@@ -1376,7 +1444,8 @@ function step03callback() {
 						}
 						//console.log(object.children);
 					});
-
+					step02LoadOver+=1;
+					OnStep02LoadOver();
 					//object.rotation = new THREE.
 					object.position.y = -5;
 					step02fr02 = object;
@@ -1418,8 +1487,22 @@ function step03callback() {
 				mouseY = (event.clientY - windowHalfY) / 2;
 
 			}
+			function clearThree(obj){
+				while(obj.children.length > 0){ 
+					clearThree(obj.children[0])
+					obj.remove(obj.children[0]);
+				}
+				if(obj.geometry) obj.geometry.dispose()
+				if(obj.material) obj.material.dispose()
+				if(obj.texture) obj.texture.dispose()
+			}  
 			function step02animate() {
-				if(curStep!=2)return;
+				if(curStep!=2)
+				{
+					clearThree(scene);
+					step02render();
+					return;
+				}				
 				requestAnimationFrame(step02animate);
 				if (mixers.length > 0) {
 					for (let i = 0; i < mixers.length; i++) {
@@ -1871,8 +1954,22 @@ function step03callback() {
 			mouseY = (event.clientY - windowHalfY) / 2;
 
 		}
+		function clearThree(obj){
+				while(obj.children.length > 0){ 
+					clearThree(obj.children[0])
+					obj.remove(obj.children[0]);
+				}
+				if(obj.geometry) obj.geometry.dispose()
+				if(obj.material) obj.material.dispose()
+				if(obj.texture) obj.texture.dispose()
+			}  
+		
 		function animate() {
-			if(curStep!=1)return;
+			if(curStep!=1){
+				clearThree();
+				render();
+				return;
+			}
 			requestAnimationFrame(animate);
 			if (mixers.length > 0) {
 				for (let i = 0; i < mixers.length; i++) {
