@@ -1,0 +1,2375 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--自由模式-->
+<head>
+	<title>自由模式</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<script src="./js/platform.js"></script>
+	<style>
+		body {
+			font-family: Monospace;
+			/*background-color: rgb(241, 231, 133);*/
+			/*background-image: url(./images/beijingtu.png);*/
+			color: #000;
+			margin: 0px;
+			overflow: hidden;
+		}
+
+		#info {
+			color: #fff;
+			position: absolute;
+			top: 10px;
+			width: 100%;
+			text-align: center;
+			z-index: 100;
+			display: block;
+		}
+
+		#foreground {
+			width: 100%;
+			height: 100%;
+			background-color: #000000;
+		}
+
+		#info a,
+		.button {
+			color: #f00;
+			font-weight: bold;
+			text-decoration: underline;
+			cursor: pointer
+		}
+		#bs1 {
+			position: absolute;
+			top: 30px;
+			right: 20px;
+		}
+
+		#bs2 {
+			position: absolute;
+			top: 70px;
+			right: 20px;
+		}
+
+		#bs3 {
+			position: absolute;
+			top: 110px;
+			right: 20px;
+		}
+
+		#f1 {
+			position: absolute;
+			top: 35px;
+			right: 35px;
+		}
+
+		#f2 {
+			position: absolute;
+			top: 75px;
+			right: 35px;
+		}
+
+		#f3 {
+			position: absolute;
+			top: 115px;
+			right: 35px;
+		}
+
+		#bottombtn {
+			display: none;
+		}
+		#tishi01 {
+			position: absolute;
+			top: 180px;
+		}
+
+		#tishi02 {
+			position: absolute;
+			top: 420px;
+			display: none;
+		}
+
+		#tishi03 {
+			position: absolute;
+			top: 500px;
+			display: none;
+		}
+		#tishi {
+			position: absolute;
+			top: 450px;
+		}
+		#tishiyaohuang {
+			position: absolute;
+			left: 60%;
+			top: 260px;
+		}
+		#tishi04 {
+			position: absolute;
+			left: 40%;
+			top: 180px;
+		}
+		#div1 {
+			position: fixed;
+			top: 180px;
+			left: 0px;
+		}
+
+		#div2 {
+			position: absolute;
+			top: 225px;
+			left: 0px;
+		}
+
+		#s1 {
+
+			position: absolute;
+			top: 12px;
+			left: 25px;
+			text-align: center;
+			font-size: 16Px;
+			
+		}
+
+		#s2 {
+			position: absolute;
+			top: 56px;
+			left: 25px;
+			text-align: center;
+			font-size: 16Px;
+		}
+
+		#s3 {
+			position: absolute;
+			bottom: 60px;
+			left: 25px;
+			text-align: center;
+			font-size: 16Px;
+		}
+
+		#s4 {
+			position: absolute;
+			bottom: 15px;
+			left: 25px;
+			text-align: center;
+			font-size: 16Px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="info">
+		<img id="btnback" src="images/返回箭头.png" width="20px" height="26px" style="position:absolute;top:6px;left:10px;" onclick="ToSelect()"
+		/>
+		<img id="tishi" src="images/shou1_yao.gif" width="45px" height="55px">
+		<img id="tishi04" src="images/shou1_yao.gif" width="45px" height="55px" style="display:none">
+		<img id="tishiyaohuang" src="images/shou3_yao.gif" width="65px" height="70px" style="display:none">
+		<div id="bottombtn" style="display:none" >
+			<input id="bs1" type="image" src="./images/bw.png" onclick="showgebo()" alt="上臂" width="60" height="30">
+			<font id="f1" color="#007cff" size="3px" onclick="showgebo()">上臂</font>
+			<input id="bs2" type="image" src="./images/bw.png" onclick="showfubu()" alt="腹部" width="60" height="30">
+			<font id="f2" color="#007cff" size="3px" onclick="showfubu()">腹部</font>
+			<input id="bs3" type="image" src="./images/bw.png" onclick="showtunbu()" alt="臀部" width="60" height="30">
+			<font id="f3" color="#007cff" size="3px" onclick="showtunbu()">臀部</font>
+		</div>
+		<img id="tishi01" src="images/shou1_yao.gif" width="45px" height="55px" style="display:none">
+		<img id="tishi02" src="images/shou1_yao.gif" width="45px" height="55px" style="display:none">
+		<img id="tishi03" src="images/shou1_yao.gif" width="45px" height="55px" style="display:none">
+	</div>
+	<div id="foreground">
+
+	</div>
+	<div id="div1">
+		<img id="open" src="images/open.png" width="110px" height="180px" onclick="o()" />
+		<font onclick="step01()" id="s1">第一步</font>
+		<font onclick="step02()" id="s2">第二步</font>
+		<font onclick="step03()" id="s3">第三步</font>
+		<font onclick="step04()" id="s4">第四步</font>
+	</div>
+	<div id="div2" style="display: none;">
+		<img id="close" src="images/close.png" width="20px" height="45px" onclick="c()" />
+	</div>
+	<script src="./three.js/build/three.min.js"></script>
+	<script src="./three.js/examples/js/loaders/FBXLoader.js"></script>
+	<script src="./three.js/examples/js/Detector.js"></script>
+	<script src="./three.js/examples/js/libs/inflate.min.js"></script>
+	<script src="./three.js/examples/js/libs/stats.min.js"></script>
+	<script src="./js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="./scripts/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="./scripts/fastClick.js"></script>
+	<script type="text/javascript" src="./scripts/lib/three.min.js"></script>
+	<script type="text/javascript" src="./scripts/lib/spar.js"></script>
+	<script type="text/javascript" src="./scripts/lib/mobile-detect.js"></script>
+	<script src="./scripts/bgcam.js"></script>
+	<script type="text/javascript">
+
+		var openid = localStorage.getItem("openid");
+
+		//第一步 事件采集
+
+		var ds = { openid : "" , company_no : '' , event_id : 2 , start_time : '2018-01-01 00:00:00'};
+
+		ds.openid = openid
+
+		console.log(ds);
+
+		$.ajax({
+
+			url: "https://www.magicreal.net/wtadmin/analysis",
+
+			async: false,//防止先第二步先执行
+
+			method: "POST",
+
+			data: ds ,
+
+			success: function (res) {
+
+				// $("#pp3").append(res.status);
+
+			}
+
+			
+
+		});
+
+		
+
+		//第二步 计数
+
+		var timer = null;
+
+		window.onload = function(){
+
+    	timer = setInterval('times()',1000);
+
+	};
+
+			function times() {
+
+			$.ajax({
+
+			url: "https://www.magicreal.net/wtadmin/analysis/online",
+
+			method: "GET" ,
+
+			xhrFields: {
+
+				withCredentials: true
+
+			},
+
+			success: function(res){
+
+				data = res.status;
+
+				// $("#pp4").append(data);
+
+				
+
+			}
+
+			
+
+		});
+
+			console.log(1111)
+
+		};
+
+
+
+
+
+		let s1,s2,s3,s4; 
+		s1 = document.getElementById("s1");
+		s2 = document.getElementById("s2");
+		s3 = document.getElementById("s3");
+		s4 = document.getElementById("s4");
+
+		function o() {
+			document.getElementById("div1").style.display = "none";//隐藏
+			document.getElementById("div2").style.display = "";//显
+		}
+		function c() {
+			document.getElementById("div2").style.display = "none";//隐藏
+			document.getElementById("div1").style.display = "";//显
+		}
+		function ResetStopCount(){
+		}
+		function step01() {
+			if(curStep==1)
+				return;
+			isendzhushe = false
+			s1.color = "#007cff";
+			document.getElementById("tishi").style.display = "inline";
+			ResetStopCount();
+			curStep=1;
+			hideStep02();
+			hideStep03();
+			hideStep04();
+			step1callback();
+		}
+		function hideStep01(){
+			document.getElementById("tishi").style.display = "none";
+			s1.color = "#000000";
+		}
+		function step02() {
+			if(curStep==2)
+				return;
+			yaoindex = 0
+			ResetStopCount();
+			s2.color = "#007cff";
+			document.getElementById("tishiyaohuang").style.display = "block";
+			curStep=2;
+			hideStep01();
+			hideStep03();
+			hideStep04();
+			step02callback();
+		}
+		function hideStep03() {
+			s3.color = "#000000";
+			document.getElementById("bottombtn").style.display="none";
+			document.getElementById("tishi01").style.display="none";
+			document.getElementById("tishi02").style.display="none";
+			document.getElementById("tishi03").style.display="none";
+		}
+		function hideStep02(){
+			s2.color = "#000000";
+			document.getElementById("tishiyaohuang").style.display = "none";
+		}
+		function step03() {
+			if(curStep==3)
+				return;
+			isendpzm = false, isendpq = false, isendzhushe03 = false;
+			fr02.visible=false;
+			s3.color = "#007cff";
+			ResetStopCount();
+			//document.getElementById("bottombtn").style.display="block";
+			document.getElementById("tishi01").style.display="inline";
+			curStep=3;
+			hideStep01();
+			hideStep02();
+			hideStep04();
+			step03callback();
+		}
+		function hideStep04(){
+			s4.color = "#000000";
+			document.getElementById("tishi04").style.display="none";
+		}
+		function step04() {
+			if(curStep==4)
+				return;
+			step04isendmove = false; 
+			bzm.visible=false;
+			pq.visible=false;
+			zbzs.visible=false;
+			zs.visible=false;
+			gebo.visible=false;tunbu=false;fubu=false;
+			ResetStopCount();
+			hideStep01();
+			hideStep03();
+			hideStep02();
+			document.getElementById("tishi04").style.display="inline";			
+			s4.color = "#007cff";
+			curStep=4;
+			step04callback();
+		}
+
+	</script>
+	<script>
+
+		let fr01action, fr02action;
+		let isendzhushe = false;
+		let fr01, fr02;
+
+		let curStep=0;
+			function swipeUp() {
+				console.log("swipUp1");
+				if (isendzhushe) {
+					return;
+				}
+				document.getElementById("tishi").style.display = "none";
+				isendzhushe = true;
+				fr01action.reset();
+				fr01action.play();
+				console.log("swipUp2");
+				setTimeout("ToStep02()", 6500);
+			}
+
+			function ToStep02() {
+				fr01.visible = false;
+				fr02.visible = true;
+				fr01action.stop();
+				fr01action.reset();
+				step02();
+			}
+
+
+		let yaoindex = 0; //需要重置为0
+
+
+		let shakeThreshold = 1000; // 定义一个摇动的阈值
+		let lastUpdate = 0; // 记录上一次摇动的时间
+		let x, y, z, lastX, lastY, lastZ; // 定义x、y、z记录三个轴的数据以及上一次触发的数据
+
+		// 添加传感器运动事件
+		function addDeviceMotionEvent2() {
+			if (window.DeviceMotionEvent) {
+				window.addEventListener('devicemotion', deviceMotionHandler, false);
+			} else {
+				alert('本设备不支持devicemotion事件');
+			}
+		}
+		// 移除传感器运动事件
+		function removeDeviceMotionEvent() {
+			if (window.DeviceMotionEvent) {
+				window.removeEventListener('devicemotion', deviceMotionHandler, false);
+			} else {
+				alert('本设备不支持devicemotion事件');
+			}
+		}
+
+		// 运动传感器处理
+		function deviceMotionHandler(eventData) {
+			let acceleration = eventData.accelerationIncludingGravity; // 获取含重力的加速度
+			let curTime = new Date().getTime();
+
+			// 100毫秒进行一次位置判断
+			if ((curTime - lastUpdate) > 100) {
+
+				let diffTime = curTime - lastUpdate;
+				lastUpdate = curTime;
+
+				x = acceleration.x;
+				y = acceleration.y;
+				z = acceleration.z;
+
+				let speed = Math.abs(x + y + z - lastX - lastY - lastZ) / diffTime * 10000;
+				// 前后x, y, z间的差值的绝对值和时间比率超过了预设的阈值，则判断设备进行了摇晃操作
+				if (speed > shakeThreshold) {
+					yaoindex = yaoindex + 1;
+					yaohuang();
+				}
+
+				lastX = x;
+				lastY = y;
+				lastZ = z;
+			}
+		}
+
+		function yaohuang() {
+			if (yaoindex >= 3) {
+				document.getElementById("tishiyaohuang").style.display = "none";
+				removeDeviceMotionEvent();
+				fr02action.play();
+				setTimeout("ShowRonghe()", 1300);
+			}
+			else {
+				removeDeviceMotionEvent();
+				fr02action.play();
+				setTimeout("AddMotion()", 1300);
+			}
+		}
+		function AddMotion() {
+			fr02action.stop();
+			fr02action.reset();
+			addDeviceMotionEvent2();
+		}
+		function ShowRonghe() {
+			//console.log("showronghe");
+			fr02action.reset();
+			fr02action.stop();
+			fr02.traverse(function (child) {
+
+				if (child instanceof THREE.Mesh) {
+					if (child.name == "fenmo") {
+						child.visible = false;
+					}
+					if (child.name == "shui") {
+						child.visible = false;
+					}
+					if (child.name == "ronghe") {
+						child.visible = true;
+					}
+				}
+			});
+			setTimeout("ToStep03()", 1000);
+		}
+		function ToStep03() {
+			step03();
+		}
+		let step04fr01, step04fr02;
+		let step04play_aqzz = false;
+		let step04play_yh = false;
+		let step04isJiexi = false;
+		let step04isendmove = false; //需要重置
+		let step04aqzzaction, step04fr02action;
+
+
+		function swipeUp04() {
+			//console.log("向上滑");
+			if (step04isendmove) {
+				return;
+			}
+			document.getElementById("tishi04").style.display = "none";
+			step04isendmove = true;
+			step04aqzzaction.reset();
+			step04aqzzaction.play();
+			setTimeout("End()", 2500);
+		}
+
+		function End() {
+			step04aqzzaction.paused = true;
+		}
+
+		function step04callback() {
+			let container;
+
+			let camera, scene, renderer;
+
+			let clock = new THREE.Clock();
+			let clock02 = new THREE.Clock();
+			let mixers = [];
+			let mixers02 = [];
+
+
+			let mouseX = 0, mouseY = 0;
+			let touchX = 0, touchY = 0;
+
+
+			let windowHalfX = window.innerWidth / 2;
+			let windowHalfY = window.innerHeight / 2;
+			let bluecolor = new THREE.Color(0x00B0F0);
+			let greencolor = new THREE.Color(0x00C01F)
+			let yelllowcolor = new THREE.Color(0xFFC000);
+			let loader = new THREE.TextureLoader();
+
+
+			init04();
+			animate04();
+			bindEvent04();
+
+			function init04() {
+
+
+				container = document.createElement('foreground');
+				document.body.appendChild(container);
+
+				camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+				camera.position.z = 30;
+
+				scene = new THREE.Scene();
+				//scene.background = new THREE.Color(0x5C8BD4);
+				let ambientLight = new THREE.AmbientLight(0xeeeeee, 0.8);
+				let directionalLight = new THREE.DirectionalLight(0xdddddd, 0.3);
+				directionalLight.position.set(0, 1, 0);
+				scene.add(ambientLight);
+				scene.add(directionalLight);
+
+				let pointLight = new THREE.PointLight(0xdddddd, 0.6);
+				camera.add(pointLight);
+				scene.add(camera);
+
+				// texture
+
+				let manager = new THREE.LoadingManager();
+				manager.onProgress = function (item, loaded, total) {
+
+					console.log(item, loaded, total);
+
+				};
+
+				let textureLoader = new THREE.TextureLoader(manager);
+				//var texture = textureLoader.load( 'textures/UV_Grid_Sm.jpg' );
+
+				// model
+
+				let onProgress = function (xhr) {
+					if (xhr.lengthComputable) {
+						let percentComplete = xhr.loaded / xhr.total * 100;
+						console.log(Math.round(percentComplete, 2) + '% downloaded');
+					}
+				};
+
+				let onError = function (xhr) {
+				};
+
+				let loader = new THREE.FBXLoader(manager);
+				let texloader = new THREE.TextureLoader();
+
+				let texture_biaoqian = texloader.load("./models/3.75.png");
+				let texture_haimian = texloader.load("./models/haimian.jpg");
+				let texture_fenmo = texloader.load("./models/fenmo.png");
+				let texture_ronghe = texloader.load("./models/ronghe.png");
+
+				let biaoqian_mat = new THREE.MeshStandardMaterial();
+
+				biaoqian_mat.opacity = 1;
+				biaoqian_mat.transparent = true;
+				biaoqian_mat.premultipliedAlpha = false;
+
+				let fenmo_mat = new THREE.MeshStandardMaterial();
+
+				fenmo_mat.opacity = 5;
+				fenmo_mat.transparent = true;
+				fenmo_mat.premultipliedAlpha = true;
+
+
+				let huihe_mat = new THREE.MeshStandardMaterial();
+
+				huihe_mat.opacity = 1;
+				huihe_mat.transparent = true;
+				huihe_mat.premultipliedAlpha = true;
+
+				let shui_mat = new THREE.MeshStandardMaterial();
+
+				shui_mat.opacity = 1;
+				shui_mat.transparent = true;
+				shui_mat.premultipliedAlpha = true;
+				//var mixers = [];
+				loader.load('./models/aqzz02.fbx', function (object) {
+					//console.log(object);
+
+					object.mixer = new THREE.AnimationMixer(object);
+					mixers.push(object.mixer);
+
+					step04aqzzaction = object.mixer.clipAction(object.animations[0]);
+
+					console.log(object.animations[0]);
+					step04aqzzaction.loop = THREE.LoopOnce;
+					//aqzzaction.stop();
+
+					object.traverse(function (child) {
+
+						if (child instanceof THREE.Mesh) {
+							//console.log(child.name);
+							//console.log("材质" + child.material.name);
+							if (child.name == "biaoqian") {
+								child.material = biaoqian_mat;
+								child.material.map = texture_biaoqian;
+							}
+							if (child.name == "zhutuiqi02") {
+								child.material.map = texture_haimian;
+							}
+							if (child.name == "guanshen01") {
+								child.material.color = greencolor;
+							}
+							if (child.name == "fenmo") {
+								child.visible = false;
+								child.material = fenmo_mat;
+
+								child.material.map = texture_fenmo;
+							}
+							if (child.name == "shui") {
+								child.visible = false;
+
+							}
+							if (child.name == "ronghe") {
+								console.log(child);
+
+								child.material = huihe_mat;
+
+								child.material.map = texture_ronghe;
+							}
+						}
+						//console.log(object.children);
+					});
+
+					//object.rotation = new THREE.
+					object.position.y = -7;
+					zhenguan = object;
+					//zhenguan.visible = false;
+					scene.add(object);
+
+				}, onProgress, onError);
+
+				renderer = sumRender._renderer;//new THREE.WebGLRenderer();
+				renderer.antialias = true;
+				renderer.alpha = true;
+				renderer.setClearAlpha(0);
+				renderer.setClearColor(0xFFFFFF, 0.0);
+				//renderer.setClearColor('rgba(255,255,255,1)');
+				renderer.setPixelRatio(window.devicePixelRatio);
+				renderer.setSize(window.innerWidth, window.innerHeight);
+				//container.appendChild(renderer.domElement);
+
+				document.addEventListener('mousemove', onDocumentMouseMove, false);
+				//document.addEventListener('touchmove', onDocumentTouchMove, false);
+
+				window.addEventListener('resize', onWindowResize, false);
+				//bindEvent();
+			}
+
+			//绑定事件
+			function bindEvent04() {
+				document.addEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
+				document.addEventListener('touchmove', touchMoveFunc04, { passive: false }, false);
+				document.addEventListener('touchend', touchEndFunc, { passive: false }, false);
+			}
+			//解绑事件
+			function removeEvent() {
+				document.removeEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
+				document.removeEventListener('touchmove', touchMoveFunc04, { passive: false }, false);
+				document.removeEventListener('touchend', touchEndFunc, { passive: false }, false);
+			}
+
+			function touchSatrtFunc(evt) {
+				try {
+					evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+					var touch = evt.touches[0]; //获取第一个触点
+					var x = Number(touch.clientX); //页面触点X坐标
+					var y = Number(touch.clientY); //页面触点Y坐标
+					//记录触点初始位置
+					startX = x;
+					startY = y;
+					//console.log(startX + "起始" + startY);
+					var target = evt.target;
+					if (target.id == "btnback") {
+						ToSelect();
+					}
+				} catch (e) {
+					alert('touchSatrtFunc：' + e.message);
+				}
+			}
+
+			//touchmove事件，这个事件无法获取坐标
+			function touchMoveFunc04(evt) {
+				try {
+					evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+					let touch = evt.touches[0]; //获取第一个触点
+					let x = Number(touch.pageX); //页面触点X坐标
+					let y = Number(touch.pageY); //页面触点Y坐标
+
+
+					let screenW = window.screen.width;
+					let screenH = window.screen.height;
+
+					//document.getElementById("version").innerHTML = "原:"+startY+"   "+"现:"+y;
+					//判断滑动方向 上下
+					if (startX > parseInt(screenW / 3) && startX < parseInt(screenW / 3 * 2) && startY > 50 && startY < parseInt(screenH / 2)) {
+						if (y - startY > 60) {
+							//swipeDown();//你自己的方法 我是用来翻页的一样的
+						} else if (y - startY < -60) {
+							swipeUp04();//你自己的方法
+						}
+					}
+				} catch (e) {
+					alert('touchMoveFunc：' + e.message);
+				}
+			}
+
+			//touchend事件
+			function touchEndFunc(evt) {
+				try {
+					evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+					let target = evt.target;
+					if (target.id == "s1") {
+						step01();
+					} if (target.id == "s2") {
+						step02();
+					} if (target.id == "s3") {
+						step03();
+					} if (target.id == "s4") {
+						step04();
+					} if (target.id == "open") {
+						o();
+					}
+					if (target.id == "close") {
+						c();
+					}
+				} catch (e) {
+					alert('touchEndFunc：' + e.message);
+				}
+			}
+
+
+			function ToSelect() {
+				window.location.href = "select.html";
+			}
+
+			function onWindowResize() {
+
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize(window.innerWidth, window.innerHeight);
+
+			}
+
+			function onDocumentMouseMove(event) {
+
+				mouseX = (event.clientX - windowHalfX) / 2;
+				mouseY = (event.clientY - windowHalfY) / 2;
+
+			}
+			//let stopCount04=0;
+			function animate04() {
+				if(curStep!=4)
+					return;
+				//stopCount04++;
+				requestAnimationFrame(animate04);
+				if (mixers.length > 0) {
+					for (var i = 0; i < mixers.length; i++) {
+						mixers[i].update(clock.getDelta());
+					}
+				}
+				if (mixers02.length > 0) {
+					for (var i = 0; i < mixers02.length; i++) {
+						mixers02[i].update(clock02.getDelta());
+					}
+				}
+				render04();
+			}
+
+			function render04() {
+
+				//TWEEN.update();
+				//camera.position.x += ( mouseX - camera.position.x ) * .05;
+				//camera.position.y += ( - mouseY - camera.position.y ) * .05;
+				//if (yh != null && !isJiexi) {
+				//yh.rotation.y = mouseX * 0.02;
+				//yh.rotation.y = touchX * 0.02;
+				//}
+				//camera.position.z += mouseX*0.02;
+				//zhenguan.rotation.x= mouseY*0.02;
+				camera.lookAt(scene.position);
+
+				renderer.autoClear = false;
+				//renderer.clear();
+				//renderer.render(backgroundScene, backgroundCamera);
+				renderer.render(scene, camera);
+			}
+		}
+
+
+
+
+
+let bzm, pq, zbzs, zs, gebo, tunbu, fubu;
+
+
+let isendpzm = false, isendpq = false, isendzhushe03 = false; //需要重置
+let bzmaction, pqaction, zbzsaction, zsaction;
+
+
+function swipeUp03() {
+	if (bzm.visible == false) return;
+	if (isendpzm) {
+		return;
+	}
+	//console.log("向上滑");
+	document.getElementById("tishi01").style.display = "none";
+	document.getElementById("tishi03").style.display = "inline";
+	isendpzm = true;
+	bzmaction.reset();
+	bzmaction.play();
+	setTimeout("Topaiqi()", 2000);
+}
+function Topaiqi() {
+	bzm.visible = false;
+	pq.visible = true;
+	bzmaction.stop();
+	bzmaction.reset();
+	//bindEvent();
+	//window.location.href = "step02.html";
+}
+function paiqiUp() {
+	if (pq.visible == false) return;
+	if (isendpq) {
+		return;
+	}
+	//console.log("向上滑");
+	document.getElementById("tishi03").style.display = "none";
+	//document.getElementById("tishi02").style.display = "inline";
+	isendpq = true;
+	pqaction.reset();
+	pqaction.play();
+	setTimeout("Tozbzs()", 1500);
+}
+function Tozbzs() {
+	bzm.visible = false;
+	pq.visible = false;
+	zbzs.visible = true;
+	pqaction.stop();
+	pqaction.reset();
+	//bindEvent();
+	document.getElementById("bottombtn").style.display = "inline";
+	//
+	console.log("showbtn");
+}
+
+function showgebo() {
+	//document.getElementById("bottombtn").style.display = "none";
+	gebo.visible = true;
+	fubu.visible = false;
+	tunbu.visible = false;
+	zbzsaction.reset();
+	zbzsaction.play();
+	setTimeout("Tozs()", 2800);
+}
+function showfubu() {
+	//document.getElementById("bottombtn").style.display = "none";
+	fubu.visible = true;
+	gebo.visible = false;
+	tunbu.visible = false;
+	zbzsaction.reset();
+	zbzsaction.play();
+	setTimeout("Tozs()", 2800);
+}
+function showtunbu() {
+	//document.getElementById("bottombtn").style.display = "none";
+	tunbu.visible = true;
+	gebo.visible = false;
+	fubu.visible = false;
+	zbzsaction.reset();
+	zbzsaction.play();
+	setTimeout("Tozs()", 2800);
+}
+function Tozs() {
+	zbzs.visible = false;
+	zs.visible = true;
+	zbzsaction.stop();
+	zbzsaction.reset();
+	//bindEvent();
+	document.getElementById("tishi02").style.display = "inline";
+}
+function zhusheUp() {
+	if (zs.visible == false) return;
+	if (isendzhushe03) {
+		return;
+	}
+	document.getElementById("tishi02").style.display = "none";
+	isendzhushe03 = true;
+	zsaction.reset();
+	zsaction.play();
+	setTimeout("ToStep04()", 2450);
+}
+function ToStep04() {
+	//zsaction.stop();
+	zsaction.paused = true;
+	step04();
+	//window.location.href = "step04_free_bgcam.html";
+}
+
+function step03callback() {
+
+
+let container;
+
+let camera, scene, renderer;
+
+let clock = new THREE.Clock();
+let clock02 = new THREE.Clock();
+let clock03 = new THREE.Clock();
+let clock04 = new THREE.Clock();
+let mixers = [];
+let mixers02 = [];
+let mixers03 = [];
+let mixers04 = [];
+
+
+let mouseX = 0, mouseY = 0;
+let touchX = 0, touchY = 0;
+
+
+let windowHalfX = window.innerWidth / 2;
+let windowHalfY = window.innerHeight / 2;
+let bluecolor = new THREE.Color(0x00B0F0);
+let greencolor = new THREE.Color(0x00C01F)
+let yelllowcolor = new THREE.Color(0xFFC000);
+let loader = new THREE.TextureLoader();
+/*
+var texture_bg = loader.load("./images/background.jpg");
+var backgroundMesh = new THREE.Mesh(
+	new THREE.PlaneGeometry(2, 2, 0),
+	new THREE.MeshBasicMaterial({
+		map: texture_bg
+	}));
+
+backgroundMesh.material.depthTest = false;
+backgroundMesh.material.depthWrite = false;
+
+// Create your background scene
+var backgroundScene = new THREE.Scene();
+var backgroundCamera = new THREE.Camera();
+backgroundScene.add(backgroundCamera);
+backgroundScene.add(backgroundMesh);*/
+
+init03();
+animate03();
+bindEvent03();
+
+function init03() {
+
+	//document.getElementById("backtoshow").style.display = "none";
+	//document.getElementById("f4").style.display = "none";
+	container = document.createElement('foreground');
+	//document.body.appendChild(container);
+
+	camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+	camera.position.z = 30;
+
+	scene = new THREE.Scene();
+	//scene.background = new THREE.Color(0x5C8BD4);
+	let ambientLight = new THREE.AmbientLight(0xeeeeee, 0.8);
+	let directionalLight = new THREE.DirectionalLight(0xdddddd, 0.3);
+	directionalLight.position.set(0, 1, 0);
+	scene.add(ambientLight);
+	scene.add(directionalLight);
+
+	let pointLight = new THREE.PointLight(0xdddddd, 0.6);
+	camera.add(pointLight);
+	scene.add(camera);
+
+	// texture
+
+	let manager = new THREE.LoadingManager();
+	manager.onProgress = function (item, loaded, total) {
+
+		console.log(item, loaded, total);
+
+	};
+
+	let textureLoader = new THREE.TextureLoader(manager);
+	//var texture = textureLoader.load( 'textures/UV_Grid_Sm.jpg' );
+
+	// model
+
+	let onProgress = function (xhr) {
+		if (xhr.lengthComputable) {
+			let percentComplete = xhr.loaded / xhr.total * 100;
+			console.log(Math.round(percentComplete, 2) + '% downloaded');
+		}
+	};
+
+	let onError = function (xhr) {
+	};
+
+	let loader = new THREE.FBXLoader(manager);
+	let texloader = new THREE.TextureLoader();
+	//var imgloader = new THREE.ImageLoader(manager);
+	/*texloader.load('./three.js/examples/models/fbx/zhenguan_haimian_D.jpg', function (image) {
+		texture.image = image;
+		texture.needsUpdate = true;
+	});*/
+	let texture_biaoqian = texloader.load("./models/3.75.png");
+	let texture_haimian = texloader.load("./models/haimian.jpg");
+	let texture_fenmo = texloader.load("./models/fenmo.png");
+	let texture_ronghe = texloader.load("./models/ronghe.png");
+
+
+	//lambert = new THREE.MeshLambertMaterial({color: 0xffffff});
+	//var black = texloader.load( "models/obj/black.png" );
+	let biaoqian_mat = new THREE.MeshStandardMaterial();
+	//material.alphaMap=black;
+	//material.color=new THREE.Color( 0xffffff );
+	biaoqian_mat.opacity = 1;
+	biaoqian_mat.transparent = true;
+	biaoqian_mat.premultipliedAlpha = false;
+
+	let fenmo_mat = new THREE.MeshStandardMaterial();
+	//material.alphaMap=black;
+	//material.color=new THREE.Color( 0xffffff );
+	fenmo_mat.opacity = 5;
+	fenmo_mat.transparent = true;
+	fenmo_mat.premultipliedAlpha = true;
+	//material.color = new THREE.Color(0x0000ff);
+
+	let huihe_mat = new THREE.MeshStandardMaterial();
+	//material.alphaMap=black;
+	//material.color=new THREE.Color( 0xffffff );
+	huihe_mat.opacity = 1;
+	huihe_mat.transparent = true;
+	huihe_mat.premultipliedAlpha = true;
+
+	let shui_mat = new THREE.MeshStandardMaterial();
+	//material.alphaMap=black;
+	//material.color=new THREE.Color( 0xffffff );
+	shui_mat.opacity = 1;
+	shui_mat.transparent = true;
+	shui_mat.premultipliedAlpha = true;
+	//var mixers = [];
+	loader.load('./models/caozuo_bazhenmao.fbx', function (object) {
+		//console.log(object);
+
+		object.mixer = new THREE.AnimationMixer(object);
+		//console.log("mixer");
+		//console.log(object.mixer);
+		mixers.push(object.mixer);
+
+		bzmaction = object.mixer.clipAction(object.animations[0]);
+		//console.log(object.animations[0]);
+		bzmaction.loop = THREE.LoopOnce;
+		bzmaction.stop();
+
+		object.traverse(function (child) {
+
+			if (child instanceof THREE.Mesh) {
+				//console.log(child.name);
+				//console.log("材质" + child.material.name);
+				if (child.name == "biaoqian") {
+					child.material = biaoqian_mat;
+					child.material.map = texture_biaoqian;
+				}
+				if (child.name == "zhutuiqi02") {
+					child.material.map = texture_haimian;
+				}
+				if (child.name == "guanshen01") {
+					child.material.color = greencolor;
+				}
+				if (child.name == "fenmo") {
+					child.visible = false;
+					child.material = fenmo_mat;
+					//child.material.color = new THREE.Color(0xffffff);
+					child.material.map = texture_fenmo;
+				}
+				if (child.name == "shui") {
+					child.visible = false;
+					//child.material = shui_mat;
+					//child.material.color = new THREE.Color(0xffffff);
+					//child.material.map = texture_fenmo;
+				}
+				if (child.name == "ronghe") {
+					//console.log(child);
+					//child.visible = false;
+					child.material = huihe_mat;
+					//child.material.color = new THREE.Color(0xffffff);
+					child.material.map = texture_ronghe;
+					child.material.color = new THREE.Color(0x0096ff);
+				}
+			}
+			//console.log(object.children);
+		});
+
+		//object.rotation = new THREE.
+		object.position.y = -7;
+		bzm = object;
+		//bzm.visible = false;
+		scene.add(object);
+
+	}, onProgress, onError);
+
+	loader.load('./models/caozuo_paiqi.fbx', function (object) {
+		//console.log(object);
+
+		object.mixer = new THREE.AnimationMixer(object);
+		mixers02.push(object.mixer);
+
+		pqaction = object.mixer.clipAction(object.animations[0]);
+		//console.log("paiqi");
+		//console.log(object.animations[0]);
+		pqaction.loop = THREE.LoopOnce;
+		pqaction.stop();
+
+		object.traverse(function (child) {
+
+			if (child instanceof THREE.Mesh) {
+				//console.log(child.name);
+				//console.log("材质" + child.material.name);
+				if (child.name == "biaoqian") {
+					child.material = biaoqian_mat;
+					child.material.map = texture_biaoqian;
+				}
+				if (child.name == "zhutuiqi02") {
+					child.material.map = texture_haimian;
+				}
+				if (child.name == "guanshen01") {
+					child.material.color = greencolor;
+				}
+				if (child.name == "fenmo") {
+					child.visible = false;
+					child.material = fenmo_mat;
+					//child.material.color = new THREE.Color(0xffffff);
+					child.material.map = texture_fenmo;
+				}
+				if (child.name == "shui") {
+					child.visible = false;
+					//child.material = shui_mat;
+					//child.material.color = new THREE.Color(0xffffff);
+					//child.material.map = texture_fenmo;
+				}
+				if (child.name == "ronghe") {
+					//console.log(child);
+					//child.visible = false;
+					child.material = huihe_mat;
+					//child.material.color = new THREE.Color(0xffffff);
+					child.material.map = texture_ronghe;
+				}
+			}
+			//console.log(object.children);
+		});
+
+		//object.rotation = new THREE.
+		object.position.y = -7;
+		pq = object;
+		pq.visible = false;
+		scene.add(object);
+
+	}, onProgress, onError);
+
+	loader.load('./models/caozuo_zhunbeizhushe.fbx', function (object) {
+		//console.log(object);
+
+		object.mixer = new THREE.AnimationMixer(object);
+		mixers03.push(object.mixer);
+
+		zbzsaction = object.mixer.clipAction(object.animations[0]);
+		//console.log("zbzs");
+		//console.log(object.animations[0]);
+		zbzsaction.loop = THREE.LoopOnce;
+		zbzsaction.stop();
+
+		object.traverse(function (child) {
+
+			if (child instanceof THREE.Mesh) {
+				//console.log(child.name);
+				//console.log("材质" + child.material.name);
+				if (child.name == "biaoqian") {
+					child.material = biaoqian_mat;
+					child.material.map = texture_biaoqian;
+				}
+				if (child.name == "zhutuiqi02") {
+					child.material.map = texture_haimian;
+				}
+				if (child.name == "guanshen01") {
+					child.material.color = greencolor;
+				}
+				if (child.name == "fenmo") {
+					child.visible = false;
+					child.material = fenmo_mat;
+					//child.material.color = new THREE.Color(0xffffff);
+					child.material.map = texture_fenmo;
+				}
+				if (child.name == "shui") {
+					child.visible = false;
+					//child.material = shui_mat;
+					//child.material.color = new THREE.Color(0xffffff);
+					//child.material.map = texture_fenmo;
+				}
+				if (child.name == "ronghe") {
+					//console.log(child);
+					//child.visible = false;
+					child.material = huihe_mat;
+					//child.material.color = new THREE.Color(0xffffff);
+					child.material.map = texture_ronghe;
+				}
+			}
+			//console.log(object.children);
+		});
+
+		//object.rotation = new THREE.
+		object.position.y = -7;
+		zbzs = object;
+		zbzs.visible = false;
+		scene.add(object);
+
+	}, onProgress, onError);
+
+	loader.load('./models/caozuo_zhushe.fbx', function (object) {
+		//console.log(object);
+
+		object.mixer = new THREE.AnimationMixer(object);
+		mixers04.push(object.mixer);
+
+		zsaction = object.mixer.clipAction(object.animations[0]);
+		//console.log("zs");
+		//console.log(object.animations[0]);
+		zsaction.loop = THREE.LoopOnce;
+		zsaction.play();
+
+		object.traverse(function (child) {
+
+			if (child instanceof THREE.Mesh) {
+				//console.log(child.name);
+				//console.log("材质" + child.material.name);
+				if (child.name == "biaoqian") {
+					child.material = biaoqian_mat;
+					child.material.map = texture_biaoqian;
+				}
+				if (child.name == "zhutuiqi02") {
+					child.material.map = texture_haimian;
+				}
+				if (child.name == "guanshen01") {
+					child.material.color = greencolor;
+				}
+				if (child.name == "fenmo") {
+					child.visible = false;
+					child.material = fenmo_mat;
+					//child.material.color = new THREE.Color(0xffffff);
+					child.material.map = texture_fenmo;
+				}
+				if (child.name == "shui") {
+					child.visible = false;
+					//child.material = shui_mat;
+					//child.material.color = new THREE.Color(0xffffff);
+					//child.material.map = texture_fenmo;
+				}
+				if (child.name == "ronghe") {
+					//console.log(child);
+					//child.visible = false;
+					child.material = huihe_mat;
+					//child.material.color = new THREE.Color(0xffffff);
+					child.material.map = texture_ronghe;
+				}
+			}
+			//console.log(object.children);
+		});
+
+		//object.rotation = new THREE.
+		object.position.y = -7;
+		zs = object;
+		zs.visible = false;
+		scene.add(object);
+
+	}, onProgress, onError);
+
+	loader.load('./models/gebo.fbx', function (object) {
+		//console.log(object);
+		//object.rotation = new THREE.
+		object.position.y = 10;
+		object.position.z = -10;
+		object.scale.set(0.3, 0.3, 0.3);
+		gebo = object;
+		gebo.visible = false;
+		scene.add(object);
+
+	}, onProgress, onError);
+	loader.load('./models/tunbu.fbx', function (object) {
+		//console.log(object);
+		//object.rotation = new THREE.
+		object.position.x = 2.5;
+		object.position.y = 10;
+		object.position.z = -11.5;
+		object.scale.set(0.3, 0.3, 0.3);
+		tunbu = object;
+		tunbu.visible = false;
+		scene.add(object);
+	}, onProgress, onError);
+	loader.load('./models/fubu.fbx', function (object) {
+		//console.log(object);
+		//object.rotation = new THREE.
+		object.position.x = 2;
+		object.position.y = 9.5;
+		object.position.z = -10.5;
+		object.scale.set(0.3, 0.3, 0.3);
+		fubu = object;
+		fubu.visible = false;
+		scene.add(object);
+	}, onProgress, onError);
+
+
+	renderer = sumRender._renderer;//new THREE.WebGLRenderer();
+	renderer.antialias = true;
+	renderer.alpha = true;
+	renderer.setClearAlpha(0);
+	renderer.setClearColor(0xFFFFFF, 0.0);
+	//renderer.setClearColor('rgba(255,255,255,1)');
+	renderer.setPixelRatio(window.devicePixelRatio);
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	//container.appendChild(renderer.domElement);
+
+	document.addEventListener('mousemove', onDocumentMouseMove, false);
+	//document.addEventListener('touchmove', onDocumentTouchMove, false);
+
+	window.addEventListener('resize', onWindowResize, false);
+	//bindEvent();
+	//test();
+}
+
+//绑定事件
+function bindEvent03() {
+	document.addEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
+	document.addEventListener('touchmove', touchMoveFunc, { passive: false }, false);
+	document.addEventListener('touchend', touchEndFunc, { passive: false }, false);
+}
+//解绑事件
+function removeEvent() {
+	document.removeEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
+	document.removeEventListener('touchmove', touchMoveFunc, { passive: false }, false);
+	document.removeEventListener('touchend', touchEndFunc, { passive: false }, false);
+}
+
+function touchSatrtFunc(evt) {
+	try {
+		evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+		let touch = evt.touches[0]; //获取第一个触点
+		let x = Number(touch.clientX); //页面触点X坐标
+		let y = Number(touch.clientY); //页面触点Y坐标
+		//记录触点初始位置
+		startX = x;
+		startY = y;
+		//console.log(startX + "起始" + startY);
+		let target = evt.target;
+		if (target.id == "btnback") {
+			ToSelect();
+		}
+	} catch (e) {
+		alert('touchSatrtFunc：' + e.message);
+	}
+}
+
+//touchmove事件，这个事件无法获取坐标
+function touchMoveFunc(evt) {
+	try {
+		evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+		let touch = evt.touches[0]; //获取第一个触点
+		let x = Number(touch.pageX); //页面触点X坐标
+		let y = Number(touch.pageY); //页面触点Y坐标
+
+		let screenW = window.screen.width;
+		let screenH = window.screen.height;
+
+		//document.getElementById("version").innerHTML = "原:"+startY+"   "+"现:"+y;
+		//判断滑动方向 上下
+		if (startX > parseInt(screenW / 3) && startX < parseInt(screenW / 3 * 2) && startY > 50 && startY < parseInt(screenH / 3)) {
+			if (y - startY > 60) {
+				//swipeDown();//你自己的方法 我是用来翻页的一样的
+			} else if (y - startY < -60) {
+				swipeUp03();//你自己的方法
+			}
+		}
+		if (startX > parseInt(screenW / 3) && startX < parseInt(screenW / 3 * 2) && startY > parseInt(screenH / 3) && startY < screenH) {
+			if (y - startY > 60) {
+				//swipeDown();//你自己的方法 我是用来翻页的一样的
+			} else if (y - startY < -60) {
+				paiqiUp();//你自己的方法
+			}
+		}
+		if (startX > parseInt(screenW / 3) && startX < parseInt(screenW / 3 * 2) && startY > parseInt(screenH / 2) && startY < screenH) {
+			if (y - startY > 60) {
+				//swipeDown();//你自己的方法 我是用来翻页的一样的
+			} else if (y - startY < -60) {
+				zhusheUp();//你自己的方法
+			}
+		}
+	} catch (e) {
+		alert('touchMoveFunc：' + e.message);
+	}
+}
+
+//touchend事件
+function touchEndFunc(evt) {
+	try {
+		evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+		let target = evt.target;
+		if (target.id == "st1") {
+			step01();
+		} if (target.id == "st2") {
+			step02();
+		} if (target.id == "st3") {
+			step03();
+		} if (target.id == "st4") {
+			step04();
+		} if (target.id == "open") {
+			o();
+		}
+		if (target.id == "close") {
+			c();
+		}
+
+		if (target.id == "bs1" || target.id == "f1") {
+			showgebo();
+		}
+		if (target.id == "bs2" || target.id == "f2") {
+			showfubu();
+		}
+		if (target.id == "bs3" || target.id == "f3") {
+			showtunbu();
+		}
+	} catch (e) {
+		alert('touchEndFunc：' + e.message);
+	}
+}
+
+
+function test() {
+	bzm.visible = false;
+	pq.visible = false;
+	zbzs.visible = true;
+}
+
+function onWindowResize() {
+
+	windowHalfX = window.innerWidth / 2;
+	windowHalfY = window.innerHeight / 2;
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize(window.innerWidth, window.innerHeight);
+
+}
+
+function onDocumentMouseMove(event) {
+	mouseX = (event.clientX - windowHalfX) / 2;
+	mouseY = (event.clientY - windowHalfY) / 2;
+}
+//let stopCount03=0;
+function animate03() {
+	if(curStep!=3)
+		return;
+	//stopCount03++;
+	requestAnimationFrame(animate03);
+	if (mixers.length > 0) {
+		for (let i = 0; i < mixers.length; i++) {
+			mixers[i].update(clock.getDelta());
+		}
+	}
+	if (mixers02.length > 0) {
+		for (let i = 0; i < mixers02.length; i++) {
+			mixers02[i].update(clock02.getDelta());
+		}
+	}
+	if (mixers03.length > 0) {
+		for (let i = 0; i < mixers03.length; i++) {
+			mixers03[i].update(clock03.getDelta());
+		}
+	}
+	if (mixers04.length > 0) {
+		for (let i = 0; i < mixers04.length; i++) {
+			mixers04[i].update(clock04.getDelta());
+		}
+	}
+	render03();
+}
+
+function render03() {
+
+	//TWEEN.update();
+	//camera.position.x += ( mouseX - camera.position.x ) * .05;
+	//camera.position.y += ( - mouseY - camera.position.y ) * .05;
+	//if (yh != null && !isJiexi) {
+	//yh.rotation.y = mouseX * 0.02;
+	//yh.rotation.y = touchX * 0.02;
+	//}
+	//camera.position.z += mouseX*0.02;
+	//zhenguan.rotation.x= mouseY*0.02;
+	camera.lookAt(scene.position);
+
+	renderer.autoClear = false;
+	//renderer.clear();
+	//renderer.render(backgroundScene, backgroundCamera);
+	renderer.render(scene, camera);
+}
+
+function ToSelect() {
+	window.location.href = "select.html";
+}
+}
+
+function step02callback(){
+		//let container;
+		console.log("at step 02");
+		let camera, scene, renderer;
+
+
+		let clock = new THREE.Clock();
+		let clock02 = new THREE.Clock();
+		let mixers = [];
+		let mixers02 = [];
+		let play_aqzz = false;
+		let play_yh = false;
+		let isJiexi = false;
+
+		let mouseX = 0, mouseY = 0;
+		let touchX = 0, touchY = 0;
+
+
+
+		let windowHalfX = window.innerWidth / 2;
+		let windowHalfY = window.innerHeight / 2;
+		let bluecolor = new THREE.Color(0x00B0F0);
+		let greencolor = new THREE.Color(0x00C01F)
+		let yelllowcolor = new THREE.Color(0xFFC000);
+		let loader = new THREE.TextureLoader();
+		/*
+		var texture_bg = loader.load("./images/background.jpg");
+		var backgroundMesh = new THREE.Mesh(
+			new THREE.PlaneGeometry(2, 2, 0),
+			new THREE.MeshBasicMaterial({
+				map: texture_bg
+			}));
+
+		backgroundMesh.material.depthTest = false;
+		backgroundMesh.material.depthWrite = false;
+
+		// Create your background scene
+		var backgroundScene = new THREE.Scene();
+		var backgroundCamera = new THREE.Camera();
+		backgroundScene.add(backgroundCamera);
+		backgroundScene.add(backgroundMesh);*/
+
+		bindEvent2();
+		init2();
+		animate2();
+		addDeviceMotionEvent2();
+
+
+		 function init2() {
+
+			//document.getElementById("backtoshow").style.display = "none";
+			//document.getElementById("f4").style.display = "none";
+			//container = document.createElement('foreground');
+			//document.body.appendChild(container);
+
+			camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+			camera.position.z = 30;
+
+			scene = new THREE.Scene();
+			//scene.background = new THREE.Color(0x5C8BD4);
+			let ambientLight = new THREE.AmbientLight(0xeeeeee, 0.8);
+			let directionalLight = new THREE.DirectionalLight(0xdddddd, 0.3);
+			directionalLight.position.set(0, 1, 0);
+			scene.add(ambientLight);
+			scene.add(directionalLight);
+
+			let pointLight = new THREE.PointLight(0xdddddd, 0.6);
+			camera.add(pointLight);
+			scene.add(camera);
+
+			// texture
+
+			let manager = new THREE.LoadingManager();
+			manager.onProgress = function (item, loaded, total) {
+
+				console.log(item, loaded, total);
+
+			};
+
+			let textureLoader = new THREE.TextureLoader(manager);
+			//var texture = textureLoader.load( 'textures/UV_Grid_Sm.jpg' );
+
+			// model
+
+			let onProgress = function (xhr) {
+				if (xhr.lengthComputable) {
+					let percentComplete = xhr.loaded / xhr.total * 100;
+					console.log(Math.round(percentComplete, 2) + '% downloaded');
+				}
+			};
+
+			let onError = function (xhr) {
+			};
+
+			let loader = new THREE.FBXLoader(manager);
+			let texloader = new THREE.TextureLoader();
+			//var imgloader = new THREE.ImageLoader(manager);
+			/*texloader.load('./three.js/examples/models/fbx/zhenguan_haimian_D.jpg', function (image) {
+				texture.image = image;
+				texture.needsUpdate = true;
+			});*/
+			let texture_biaoqian = texloader.load("./models/3.75.png");
+			let texture_haimian = texloader.load("./models/haimian.jpg");
+			let texture_fenmo = texloader.load("./models/fenmo.png");
+			let texture_ronghe = texloader.load("./models/ronghe.png");
+
+
+			//lambert = new THREE.MeshLambertMaterial({color: 0xffffff});
+			//var black = texloader.load( "models/obj/black.png" );
+			let biaoqian_mat = new THREE.MeshStandardMaterial();
+			//material.alphaMap=black;
+			//material.color=new THREE.Color( 0xffffff );
+			biaoqian_mat.opacity = 1;
+			biaoqian_mat.transparent = true;
+			biaoqian_mat.premultipliedAlpha = false;
+
+			let fenmo_mat = new THREE.MeshStandardMaterial();
+			//material.alphaMap=black;
+			//material.color=new THREE.Color( 0xffffff );
+			fenmo_mat.opacity = 5;
+			fenmo_mat.transparent = true;
+			fenmo_mat.premultipliedAlpha = true;
+			//material.color = new THREE.Color(0x0000ff);
+
+			let huihe_mat = new THREE.MeshStandardMaterial();
+			//material.alphaMap=black;
+			//material.color=new THREE.Color( 0xffffff );
+			huihe_mat.opacity = 1;
+			huihe_mat.transparent = true;
+			huihe_mat.premultipliedAlpha = true;
+
+			let shui_mat = new THREE.MeshStandardMaterial();
+			//material.alphaMap=black;
+			//material.color=new THREE.Color( 0xffffff );
+			shui_mat.opacity = 1;
+			shui_mat.transparent = true;
+			shui_mat.premultipliedAlpha = true;
+			//var mixers = [];
+			loader.load('./models/caozuo_furong02.fbx', function (object) {
+				//console.log(object);
+
+				object.mixer = new THREE.AnimationMixer(object);
+				mixers.push(object.mixer);
+
+				fr02action = object.mixer.clipAction(object.animations[0]);
+				//console.log(object.animations[0]);
+				//fr02action.loop = THREE.LoopOnce;
+				fr02action.stop();
+
+				object.traverse(function (child) {
+
+					if (child instanceof THREE.Mesh) {
+						//console.log(child.name);
+						//console.log("材质" + child.material.name);
+						if (child.name == "biaoqian") {
+							child.material = biaoqian_mat;
+							child.material.map = texture_biaoqian;
+						}
+						if (child.name == "zhutuiqi02") {
+							child.material.map = texture_haimian;
+						}
+						if (child.name == "guanshen01") {
+							child.material.color = greencolor;
+						}
+						if (child.name == "fenmo") {
+							//child.visible = false;
+							child.material = fenmo_mat;
+							//child.material.color = new THREE.Color(0xffffff);
+							child.material.map = texture_fenmo;
+							child.material.color = new THREE.Color(0x888888);
+						}
+						if (child.name == "shui") {
+							//child.visible = false;
+							//child.material = shui_mat;
+							//child.material.color = new THREE.Color(0xffffff);
+							//child.material.map = texture_fenmo;
+							child.material.color = new THREE.Color(0x1cc6ea);
+						}
+						if (child.name == "ronghe") {
+							//console.log(child);
+							child.visible = false;
+							child.material = huihe_mat;
+							child.material.color = new THREE.Color(0x0096ff);
+							child.material.map = texture_ronghe;
+						}
+					}
+					//console.log(object.children);
+				});
+
+				//object.rotation = new THREE.
+				object.position.y = -5;
+				fr02 = object;
+				//fr02.visible = false;
+				scene.add(object);
+
+			}, onProgress, onError);
+
+			renderer = sumRender._renderer;//new THREE.WebGLRenderer();
+			renderer.antialias = true;
+			renderer.alpha = true;
+			renderer.setClearAlpha(0);
+			renderer.setClearColor(0xFFFFFF, 0.0); 
+			//renderer.setClearColor('rgba(255,255,255,1)');
+			renderer.setPixelRatio(window.devicePixelRatio);
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			//container.appendChild(renderer.domElement);
+
+			document.addEventListener('mousemove', onDocumentMouseMove, false);
+			//document.addEventListener('touchmove', onDocumentTouchMove, false);
+
+			window.addEventListener('resize', onWindowResize, false);
+			//bindEvent();
+		}
+		function onWindowResize() {
+
+			windowHalfX = window.innerWidth / 2;
+			windowHalfY = window.innerHeight / 2;
+
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+
+			renderer.setSize(window.innerWidth, window.innerHeight);
+
+		}
+
+		function onDocumentMouseMove(event) {
+
+			mouseX = (event.clientX - windowHalfX) / 2;
+			mouseY = (event.clientY - windowHalfY) / 2;
+
+		}
+		//let stopCount02=0;
+		function animate2() {
+			if(curStep!=2)
+				return;
+			//stopCount02++;
+			requestAnimationFrame(animate2);
+			if (mixers.length > 0) {
+				for (let i = 0; i < mixers.length; i++) {
+					mixers[i].update(clock.getDelta());
+				}
+			}
+			if (mixers02.length > 0) {
+				for (let i = 0; i < mixers02.length; i++) {
+					mixers02[i].update(clock02.getDelta());
+				}
+			}
+			render02();
+		}
+
+		function render02() {
+			camera.lookAt(scene.position);
+
+			renderer.autoClear = false;
+			//renderer.clear();
+			//renderer.render(backgroundScene, backgroundCamera);
+			renderer.render(scene, camera);
+		}
+
+
+		function HideRonghe() {
+			//console.log("showronghe");
+			fr02.traverse(function (child) {
+
+				if (child instanceof THREE.Mesh) {
+					if (child.name == "fenmo") {
+						child.visible = true;
+					}
+					if (child.name == "shui") {
+						child.visible = true;
+					}
+					if (child.name == "ronghe") {
+						child.visible = false;
+					}
+				}
+			});
+			//document.getElementById("f4").style.display = "none";
+		}
+
+		function ToSelect() {
+			window.location.href = "select.html";
+		}
+
+		//绑定事件
+		function bindEvent2() {
+			document.addEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
+			document.addEventListener('touchmove', touchMoveFunc, { passive: false }, false);
+			document.addEventListener('touchend', touchEndFunc, { passive: false }, false);
+		}
+		//解绑事件
+		function removeEvent() {
+			document.removeEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
+			document.removeEventListener('touchmove', touchMoveFunc, { passive: false }, false);
+			document.removeEventListener('touchend', touchEndFunc, { passive: false }, false);
+		}
+
+		function touchSatrtFunc(evt) {
+			try {
+				evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+				let touch = evt.touches[0]; //获取第一个触点
+				let x = Number(touch.clientX); //页面触点X坐标
+				let y = Number(touch.clientY); //页面触点Y坐标
+				//记录触点初始位置
+				startX = x;
+				startY = y;
+				//console.log(startX + "起始" + startY);
+				let target = evt.target;
+				if (target.id == "btnback") {
+					ToSelect();
+				}
+			} catch (e) {
+				alert('touchSatrtFunc：' + e.message);
+			}
+		}
+
+		//touchmove事件，这个事件无法获取坐标
+		function touchMoveFunc(evt) {
+			try {
+				evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+				let touch = evt.touches[0]; //获取第一个触点
+				let x = Number(touch.pageX); //页面触点X坐标
+				let y = Number(touch.pageY); //页面触点Y坐标
+
+
+				//document.getElementById("version").innerHTML = "原:"+startY+"   "+"现:"+y;
+				//判断滑动方向 上下
+				/*	if (startX > 110 && startX < 240 && startY > 450 && startY < 640) {
+						if (y - startY > 100) {
+							swipeDown();//你自己的方法 我是用来翻页的一样的
+						} else if (y - startY < -100) {
+							swipeUp();//你自己的方法
+						}
+					}*/
+			} catch (e) {
+				alert('touchMoveFunc：' + e.message);
+			}
+		}
+
+		//touchend事件
+		function touchEndFunc(evt) {
+			try {
+				evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+				let target = evt.target;
+				if (target.id == "s1") {
+					step01();
+				} if (target.id == "s2") {
+					step02();
+				} if (target.id == "s3") {
+					step03();
+				} if (target.id == "s4") {
+					step04();
+				} if (target.id == "open") {
+					o();
+				}
+				if (target.id == "close") {
+					c();
+				}
+			} catch (e) {
+				alert('touchEndFunc：' + e.message);
+			}
+		}
+}
+		function step1callback() {
+			//let container;
+
+			let camera, scene, renderer;
+
+			let clock = new THREE.Clock();
+			let clock02 = new THREE.Clock();
+			let mixers = [];
+			let mixers02 = [];
+			let play_aqzz = false;
+			let play_yh = false;
+			let isJiexi = false;
+
+			let mouseX = 0, mouseY = 0;
+			let touchX = 0, touchY = 0;
+
+
+			let windowHalfX = window.innerWidth / 2;
+			let windowHalfY = window.innerHeight / 2;
+			let bluecolor = new THREE.Color(0x00B0F0);
+			let greencolor = new THREE.Color(0x00C01F)
+			let yelllowcolor = new THREE.Color(0xFFC000);
+			let loader = new THREE.TextureLoader();
+			/*
+			var texture_bg = loader.load("./images/background.jpg");
+			var backgroundMesh = new THREE.Mesh(
+				new THREE.PlaneGeometry(2, 2, 0),
+				new THREE.MeshBasicMaterial({
+					map: texture_bg
+				}));
+
+			backgroundMesh.material.depthTest = false;
+			backgroundMesh.material.depthWrite = false;
+
+			// Create your background scene
+			var backgroundScene = new THREE.Scene();
+			var backgroundCamera = new THREE.Camera();
+			backgroundScene.add(backgroundCamera);
+			backgroundScene.add(backgroundMesh);*/
+
+			init();
+			animate();
+			bindEvent();
+
+
+			function init() {
+
+				//document.getElementById("backtoshow").style.display = "none";
+				//document.getElementById("f4").style.display = "none";
+				//container = document.createElement('foreground');
+				//document.body.appendChild(container);
+
+				camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+				camera.position.z = 30;
+
+				scene = new THREE.Scene();
+				//scene.background = new THREE.Color(0x5C8BD4);
+				let ambientLight = new THREE.AmbientLight(0xeeeeee, 0.8);
+				let directionalLight = new THREE.DirectionalLight(0xdddddd, 0.3);
+				directionalLight.position.set(0, 1, 0);
+				scene.add(ambientLight);
+				scene.add(directionalLight);
+
+				let pointLight = new THREE.PointLight(0xdddddd, 0.6);
+				camera.add(pointLight);
+				scene.add(camera);
+
+				// texture
+
+				let manager = new THREE.LoadingManager();
+				manager.onProgress = function (item, loaded, total) {
+
+					console.log(item, loaded, total);
+
+				};
+
+				let textureLoader = new THREE.TextureLoader(manager);
+				//var texture = textureLoader.load( 'textures/UV_Grid_Sm.jpg' );
+
+				// model
+
+				let onProgress = function (xhr) {
+					if (xhr.lengthComputable) {
+						var percentComplete = xhr.loaded / xhr.total * 100;
+						console.log(Math.round(percentComplete, 2) + '% downloaded');
+					}
+				};
+
+				let onError = function (xhr) {
+				};
+
+				let loader = new THREE.FBXLoader(manager);
+				let texloader = new THREE.TextureLoader();
+				//var imgloader = new THREE.ImageLoader(manager);
+				/*texloader.load('./three.js/examples/models/fbx/zhenguan_haimian_D.jpg', function (image) {
+					texture.image = image;
+					texture.needsUpdate = true;
+				});*/
+				let texture_biaoqian = texloader.load("./three.js/examples/models/fbx/biaoqian.png")
+				let texture_haimian = texloader.load("./three.js/examples/models/fbx/haimian.jpg")
+				let texture_fenmo = texloader.load("./three.js/examples/models/fbx/fenmo.png")
+				let texture_ronghe = texloader.load("./three.js/examples/models/fbx/ronghe.png")
+
+
+				//lambert = new THREE.MeshLambertMaterial({color: 0xffffff});
+				//var black = texloader.load( "models/obj/black.png" );
+				let biaoqian_mat = new THREE.MeshStandardMaterial();
+				//material.alphaMap=black;
+				//material.color=new THREE.Color( 0xffffff );
+				biaoqian_mat.opacity = 1;
+				biaoqian_mat.transparent = true;
+				biaoqian_mat.premultipliedAlpha = false;
+
+				let fenmo_mat = new THREE.MeshStandardMaterial();
+				//material.alphaMap=black;
+				//material.color=new THREE.Color( 0xffffff );
+				fenmo_mat.opacity = 5;
+				fenmo_mat.transparent = true;
+				fenmo_mat.premultipliedAlpha = true;
+				//material.color = new THREE.Color(0x0000ff);
+
+				let huihe_mat = new THREE.MeshStandardMaterial();
+				//material.alphaMap=black;
+				//material.color=new THREE.Color( 0xffffff );
+				huihe_mat.opacity = 1;
+				huihe_mat.transparent = true;
+				huihe_mat.premultipliedAlpha = true;
+
+				let shui_mat = new THREE.MeshStandardMaterial();
+				//material.alphaMap=black;
+				//material.color=new THREE.Color( 0xffffff );
+				shui_mat.opacity = 1;
+				shui_mat.transparent = true;
+				shui_mat.premultipliedAlpha = true;
+				//var mixers = [];
+				loader.load('./models/caozuo_furong01.fbx', function (object) {
+					//console.log(object);
+
+					object.mixer = new THREE.AnimationMixer(object);
+					//console.log("mixer");
+					//console.log(object.mixer);
+					mixers02.push(object.mixer);
+
+					fr01action = object.mixer.clipAction(object.animations[0]);
+					//console.log(object.animations[0]);
+					fr01action.loop = THREE.LoopOnce;
+					fr01action.stop();
+
+					object.traverse(function (child) {
+
+						if (child instanceof THREE.Mesh) {
+							//console.log(child.name);
+							//console.log("材质" + child.material.name);
+							if (child.name == "biaoqian") {
+								child.material = biaoqian_mat;
+								child.material.map = texture_biaoqian;
+							}
+							if (child.name == "zhutuiqi02") {
+								child.material.map = texture_haimian;
+							}
+							if (child.name == "guanshen01") {
+								child.material.color = greencolor;
+							}
+							if (child.name == "fenmo") {
+								//child.visible = false;
+								child.material = fenmo_mat;
+								//child.material.color = new THREE.Color(0xffffff);
+								child.material.map = texture_fenmo;
+								child.material.color = new THREE.Color(0x888888);
+							}
+							if (child.name == "shui") {
+								//child.visible = false;
+								//child.material = shui_mat;
+								//child.material.color = new THREE.Color(0xffffff);
+								//child.material.map = texture_fenmo;
+								child.material.color = new THREE.Color(0x1cc6ea);
+							}
+							if (child.name == "ronghe") {
+								//console.log(child);
+								child.visible = false;
+								child.material = huihe_mat;
+								//child.material.color = new THREE.Color(0xffffff);
+								child.material.map = texture_ronghe;
+							}
+						}
+						//console.log(object.children);
+					});
+
+					//object.rotation = new THREE.
+					object.position.y = -5;
+					fr01 = object;
+					//yh.visible=false;
+					scene.add(object);
+
+				}, onProgress, onError);
+				loader.load('./models/caozuo_furong02.fbx', function (object) {
+					//console.log(object);
+
+					object.mixer = new THREE.AnimationMixer(object);
+					mixers.push(object.mixer);
+
+					fr02action = object.mixer.clipAction(object.animations[0]);
+					//console.log("动画"+object.animations[0]);
+					fr02action.loop = THREE.LoopOnce;
+					fr02action.stop();
+
+					object.traverse(function (child) {
+
+						if (child instanceof THREE.Mesh) {
+							//console.log(child.name);
+							//console.log("材质" + child.material.name);
+							if (child.name == "biaoqian") {
+								child.material = biaoqian_mat;
+								child.material.map = texture_biaoqian;
+							}
+							if (child.name == "zhutuiqi02") {
+								child.material.map = texture_haimian;
+							}
+							if (child.name == "guanshen01") {
+								child.material.color = greencolor;
+							}
+							if (child.name == "fenmo") {
+								//child.visible = false;
+								child.material = fenmo_mat;
+								//child.material.color = new THREE.Color(0xffffff);
+								child.material.map = texture_fenmo;
+								child.material.color = new THREE.Color(0x888888);
+							}
+							if (child.name == "shui") {
+								//child.visible = false;
+								//child.material = shui_mat;
+								//child.material.color = new THREE.Color(0xffffff);
+								//child.material.map = texture_fenmo;
+								child.material.color = new THREE.Color(0x1cc6ea);
+							}
+							if (child.name == "ronghe") {
+								//console.log(child);
+								child.visible = false;
+								child.material = huihe_mat;
+								//child.material.color = new THREE.Color(0xffffff);
+								child.material.map = texture_ronghe;
+							}
+						}
+						//console.log(object.children);
+					});
+
+					//object.rotation = new THREE.
+					object.position.y = -5;
+					fr02 = object;
+					fr02.visible = false;
+					scene.add(object);
+
+				}, onProgress, onError);
+
+				renderer = sumRender._renderer; //new THREE.WebGLRenderer();
+				renderer.antialias = true;
+				renderer.alpha = true;
+				renderer.setClearAlpha(0);
+				renderer.setClearColor(0xFFFFFF, 0.0); 
+				//renderer.setClearColor('rgba(255,255,255,1)');
+				renderer.setPixelRatio(window.devicePixelRatio);
+				renderer.setSize(window.innerWidth, window.innerHeight);
+				//container.appendChild(renderer.domElement);
+
+				document.addEventListener('mousemove', onDocumentMouseMove, false);
+				//document.addEventListener('touchmove', onDocumentTouchMove, false);
+
+				window.addEventListener('resize', onWindowResize, false);
+				//bindEvent();
+			}
+
+			//绑定事件
+			function bindEvent() {
+				document.addEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
+				document.addEventListener('touchmove', touchMoveFunc, { passive: false }, false);
+				document.addEventListener('touchend', touchEndFunc, { passive: false }, false);
+			}
+			//解绑事件
+			function removeEvent() {
+				document.removeEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
+				document.removeEventListener('touchmove', touchMoveFunc, { passive: false }, false);
+				document.removeEventListener('touchend', touchEndFunc, { passive: false }, false);
+			}
+
+			function touchSatrtFunc(evt) {
+				try {
+					evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+					let touch = evt.touches[0]; //获取第一个触点
+					let x = Number(touch.clientX); //页面触点X坐标
+					let y = Number(touch.clientY); //页面触点Y坐标
+					//记录触点初始位置
+					startX = x;
+					startY = y;
+					//console.log(startX + "起始" + startY);
+					let target = evt.target;
+					if (target.id == "btnback") {
+						ToSelect();
+					}
+				} catch (e) {
+					alert('touchSatrtFunc：' + e.message);
+				}
+			}
+
+			//touchmove事件，这个事件无法获取坐标
+			function touchMoveFunc(evt) {
+				try {
+					evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+					let touch = evt.touches[0]; //获取第一个触点
+					let x = Number(touch.pageX); //页面触点X坐标
+					let y = Number(touch.pageY); //页面触点Y坐标
+
+					let screenW = window.screen.width;
+					let screenH = window.screen.height;
+
+					//document.getElementById("version").innerHTML = "原:"+startY+"   "+"现:"+y;
+					//判断滑动方向 上下
+					if (startX > parseInt(screenW / 3) && startX < parseInt(screenW / 3 * 2) && startY > parseInt(screenH / 3) && startY < screenH) {
+						if (y - startY > 60) {
+							//swipeDown();//你自己的方法 我是用来翻页的一样的
+						} else if (y - startY < -60) {
+							swipeUp();//你自己的方法
+						}
+					}
+				} catch (e) {
+					alert('touchMoveFunc：' + e.message);
+				}
+			}
+
+			//touchend事件
+			function touchEndFunc(evt) {
+				try {
+					evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+					let target = evt.target;
+					if (target.id == "s1") {
+						step01();
+					} if (target.id == "s2") {
+						step02();
+					} if (target.id == "s3") {
+						step03();
+					} if (target.id == "s4") {
+						step04();
+					} if (target.id == "open") {
+						o();
+					}
+					if (target.id == "close") {
+						c();
+					}
+				} catch (e) {
+					alert('touchEndFunc：' + e.message);
+				}
+			}
+			
+
+			function onWindowResize() {
+
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize(window.innerWidth, window.innerHeight);
+
+			}
+
+			function onDocumentMouseMove(event) {
+
+				mouseX = (event.clientX - windowHalfX) / 2;
+				mouseY = (event.clientY - windowHalfY) / 2;
+
+			}
+			
+			function animate() {
+				if(curStep!=1)
+					return;
+				//stopCount01++;
+				requestAnimationFrame(animate);
+				if (mixers.length > 0) {
+					for (let i = 0; i < mixers.length; i++) {
+						mixers[i].update(clock.getDelta());
+					}
+				}
+				if (mixers02.length > 0) {
+					for (let i = 0; i < mixers02.length; i++) {
+						mixers02[i].update(clock02.getDelta());
+					}
+				}
+				render();
+			}
+
+			function render() {
+
+				//TWEEN.update();
+				//camera.position.x += ( mouseX - camera.position.x ) * .05;
+				//camera.position.y += ( - mouseY - camera.position.y ) * .05;
+				//if (yh != null && !isJiexi) {
+				//yh.rotation.y = mouseX * 0.02;
+				//yh.rotation.y = touchX * 0.02;
+				//}
+				//camera.position.z += mouseX*0.02;
+				//zhenguan.rotation.x= mouseY*0.02;
+				camera.lookAt(scene.position);
+
+				renderer.autoClear = false;
+				//renderer.clear();
+				//renderer.render(backgroundScene, backgroundCamera);
+				renderer.render(scene, camera);
+			}
+			function ShowRonghe() {
+				yh.traverse(function (child) {
+
+					if (child instanceof THREE.Mesh) {
+						if (child.name == "fenmo") {
+							child.visible = false;
+						}
+						if (child.name == "shui") {
+							child.visible = false;
+						}
+						if (child.name == "ronghe") {
+							child.visible = true;
+						}
+					}
+				});
+				//document.getElementById("f4").style.display = "none";
+			}
+			function HideRonghe() {
+				yh.traverse(function (child) {
+
+					if (child instanceof THREE.Mesh) {
+						if (child.name == "fenmo") {
+							child.visible = true;
+						}
+						if (child.name == "shui") {
+							child.visible = true;
+						}
+						if (child.name == "ronghe") {
+							child.visible = false;
+						}
+					}
+				});
+				//document.getElementById("f4").style.display = "none";
+			}
+			function ToSelect() {
+				window.location.href = "select.html";
+			}
+		}
+		loadcamera(step01);
+	</script>
+</body>
+
+</html>
