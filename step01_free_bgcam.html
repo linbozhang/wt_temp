@@ -720,18 +720,18 @@
 
 			//绑定事件
 			function bindEvent04() {
-				document.addEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
+				document.addEventListener('touchstart', step04touchSatrtFunc, { passive: false }, false);
 				document.addEventListener('touchmove', touchMoveFunc04, { passive: false }, false);
-				document.addEventListener('touchend', touchEndFunc, { passive: false }, false);
+				document.addEventListener('touchend', step04touchEndFunc, { passive: false }, false);
 			}
 			//解绑事件
 			function removeEvent04() {
-				document.removeEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
+				document.removeEventListener('touchstart', step04touchSatrtFunc, { passive: false }, false);
 				document.removeEventListener('touchmove', touchMoveFunc04, { passive: false }, false);
-				document.removeEventListener('touchend', touchEndFunc, { passive: false }, false);
+				document.removeEventListener('touchend', step04touchEndFunc, { passive: false }, false);
 			}
 
-			function touchSatrtFunc(evt) {
+			function step04touchSatrtFunc(evt) {
 				try {
 					evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 					var touch = evt.touches[0]; //获取第一个触点
@@ -746,7 +746,7 @@
 						ToSelect();
 					}
 				} catch (e) {
-					alert('touchSatrtFunc：' + e.message);
+					//alert('touchSatrtFunc：' + e.message);
 				}
 			}
 
@@ -772,12 +772,12 @@
 						}
 					}
 				} catch (e) {
-					alert('touchMoveFunc：' + e.message);
+					//alert('touchMoveFunc：' + e.message);
 				}
 			}
 
 			//touchend事件
-			function touchEndFunc(evt) {
+			function step04touchEndFunc(evt) {
 				try {
 					evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 					let target = evt.target;
@@ -796,7 +796,7 @@
 						c();
 					}
 				} catch (e) {
-					alert('touchEndFunc：' + e.message);
+					//alert('step04touchEndFunc：' + e.message);
 				}
 			}
 
@@ -1187,14 +1187,14 @@ function init03() {
 			//console.log(object.children);
 		});
 		
-	step03LoadOver+=1;
-	OnStep03LoadOver();
+
 		//object.rotation = new THREE.
 		object.position.y = -7;
 		bzm = object;
 		//bzm.visible = false;
 		scene.add(object);
-
+		step03LoadOver+=1;
+		OnStep03LoadOver();
 	}, onProgress, onError);
 
 	loader.load('./models/caozuo_paiqi.fbx', function (object) {
@@ -1436,18 +1436,18 @@ function init03() {
 
 //绑定事件
 function bindEvent03() {
-	document.addEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
-	document.addEventListener('touchmove', touchMoveFunc, { passive: false }, false);
-	document.addEventListener('touchend', touchEndFunc, { passive: false }, false);
+	document.addEventListener('touchstart', step03touchSatrtFunc, { passive: false }, false);
+	document.addEventListener('touchmove', step03touchMoveFunc, { passive: false }, false);
+	document.addEventListener('touchend', step03touchEndFunc, { passive: false }, false);
 }
 //解绑事件
 function removeEvent03() {
-	document.removeEventListener('touchstart', touchSatrtFunc, { passive: false }, false);
-	document.removeEventListener('touchmove', touchMoveFunc, { passive: false }, false);
-	document.removeEventListener('touchend', touchEndFunc, { passive: false }, false);
+	document.removeEventListener('touchstart', step03touchSatrtFunc, { passive: false }, false);
+	document.removeEventListener('touchmove', step03touchMoveFunc, { passive: false }, false);
+	document.removeEventListener('touchend', step03touchEndFunc, { passive: false }, false);
 }
 
-function touchSatrtFunc(evt) {
+function step03touchSatrtFunc(evt) {
 	try {
 		evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 		let touch = evt.touches[0]; //获取第一个触点
@@ -1462,12 +1462,12 @@ function touchSatrtFunc(evt) {
 			ToSelect();
 		}
 	} catch (e) {
-		alert('touchSatrtFunc：' + e.message);
+		//alert('touchSatrtFunc：' + e.message);
 	}
 }
 
 //touchmove事件，这个事件无法获取坐标
-function touchMoveFunc(evt) {
+function step03touchMoveFunc(evt) {
 	try {
 		evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 		let touch = evt.touches[0]; //获取第一个触点
@@ -1501,12 +1501,12 @@ function touchMoveFunc(evt) {
 			}
 		}
 	} catch (e) {
-		alert('touchMoveFunc：' + e.message);
+		//alert('touchMoveFunc：' + e.message);
 	}
 }
 
 //touchend事件
-function touchEndFunc(evt) {
+function step03touchEndFunc(evt) {
 	try {
 		evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 		let target = evt.target;
@@ -1535,7 +1535,7 @@ function touchEndFunc(evt) {
 			showtunbu();
 		}
 	} catch (e) {
-		alert('touchEndFunc：' + e.message);
+		//alert('step03touchEndFunc：' + e.message);
 	}
 }
 
@@ -1966,7 +1966,7 @@ function step02callback(){
 					ToSelect();
 				}
 			} catch (e) {
-				alert('touchSatrtFunc：' + e.message);
+				//alert('touchSatrtFunc：' + e.message);
 			}
 		}
 
@@ -1989,7 +1989,7 @@ function step02callback(){
 						}
 					}*/
 			} catch (e) {
-				alert('touchMoveFunc：' + e.message);
+				//alert('touchMoveFunc：' + e.message);
 			}
 		}
 
@@ -2013,7 +2013,7 @@ function step02callback(){
 					c();
 				}
 			} catch (e) {
-				alert('touchEndFunc：' + e.message);
+				//alert('step02touchEndFunc：' + e.message);
 			}
 		}
 }
@@ -2329,7 +2329,7 @@ function step02callback(){
 						ToSelect();
 					}
 				} catch (e) {
-					alert('touchSatrtFunc：' + e.message);
+					//alert('touchSatrtFunc：' + e.message);
 				}
 			}
 
@@ -2354,7 +2354,7 @@ function step02callback(){
 						}
 					}
 				} catch (e) {
-					alert('touchMoveFunc：' + e.message);
+					//alert('touchMoveFunc：' + e.message);
 				}
 			}
 
@@ -2378,7 +2378,7 @@ function step02callback(){
 						c();
 					}
 				} catch (e) {
-					alert('touchEndFunc：' + e.message);
+					//alert('step01touchEndFunc：' + e.message);
 				}
 			}
 			
