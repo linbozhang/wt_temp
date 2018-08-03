@@ -160,6 +160,7 @@
 	<div id="info">
 		<img id="btnback" src="images/返回箭头.png" width="20px" height="26px" style="position:absolute;top:6px;left:10px;" onclick="ToSelect()"
 		/>
+		<font id="fontback" style="font-size: 16px;position:absolute;top:8px;left:30px;display: none;">返回首页</font>
 		<img id="tishi" src="images/shou1_yao.gif" width="45px" height="55px">
 		<img id="tishi04" src="images/shou1_yao.gif" width="45px" height="55px" style="display:none">
 		<img id="tishiyaohuang" src="images/shou3_yao.gif" width="65px" height="70px" style="display:none">
@@ -741,7 +742,7 @@
 					startY = y;
 					//console.log(startX + "起始" + startY);
 					var target = evt.target;
-					if (target.id == "btnback") {
+					if (target.id == "btnback" || target.id == "fontback") {					
 						ToSelect();
 					}
 				} catch (e) {
@@ -1457,7 +1458,7 @@ function touchSatrtFunc(evt) {
 		startY = y;
 		//console.log(startX + "起始" + startY);
 		let target = evt.target;
-		if (target.id == "btnback") {
+		if (target.id == "btnback" || target.id == "fontback") {
 			ToSelect();
 		}
 	} catch (e) {
@@ -1509,13 +1510,13 @@ function touchEndFunc(evt) {
 	try {
 		evt.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
 		let target = evt.target;
-		if (target.id == "st1") {
+		if (target.id == "s1") {
 			step01();
-		} if (target.id == "st2") {
+		} if (target.id == "s2") {
 			step02();
-		} if (target.id == "st3") {
+		} if (target.id == "s3") {
 			step03();
-		} if (target.id == "st4") {
+		} if (target.id == "s4") {
 			step04();
 		} if (target.id == "open") {
 			o();
@@ -1961,7 +1962,7 @@ function step02callback(){
 				startY = y;
 				//console.log(startX + "起始" + startY);
 				let target = evt.target;
-				if (target.id == "btnback") {
+				if (target.id == "btnback" || target.id == "fontback") {
 					ToSelect();
 				}
 			} catch (e) {
@@ -2324,7 +2325,7 @@ function step02callback(){
 					startY = y;
 					//console.log(startX + "起始" + startY);
 					let target = evt.target;
-					if (target.id == "btnback") {
+					if (target.id == "btnback" || target.id == "fontback") {
 						ToSelect();
 					}
 				} catch (e) {
